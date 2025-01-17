@@ -1,0 +1,32 @@
+[gd_scene load_steps=6 format=3 uid="uid://b5j6flcbneu7a"]
+
+[ext_resource type="Texture2D" uid="uid://cxge3bx141ayr" path="res://bubble_512x512/bubble_3.png" id="1_jcj0k"]
+[ext_resource type="Script" uid="uid://dqw3p7bruesof" path="res://inner.gd" id="1_jyq5n"]
+[ext_resource type="FontFile" uid="uid://d3xkhn5qitvno" path="res://kenney_ui-pack/Font/Kenney Future.ttf" id="2_jyq5n"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_1bvp3"]
+radius = 38.0
+
+[sub_resource type="LabelSettings" id="LabelSettings_lquwl"]
+font = ExtResource("2_jyq5n")
+font_size = 48
+
+[node name="RigidBody2D" type="RigidBody2D" node_paths=PackedStringArray("label")]
+script = ExtResource("1_jyq5n")
+label = NodePath("Label")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_1bvp3")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+modulate = Color(0.109804, 0.623529, 0.843137, 1)
+scale = Vector2(0.15, 0.15)
+texture = ExtResource("1_jcj0k")
+
+[node name="Label" type="Label" parent="."]
+offset_left = -13.0
+offset_top = -26.0
+offset_right = 47.0
+offset_bottom = 55.0
+text = "B"
+label_settings = SubResource("LabelSettings_lquwl")

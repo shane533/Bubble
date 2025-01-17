@@ -1,0 +1,32 @@
+[gd_scene load_steps=6 format=3 uid="uid://blek7o4gkhsu6"]
+
+[ext_resource type="Texture2D" uid="uid://cn5t837mhvfur" path="res://bubble_1.png" id="1_4a276"]
+[ext_resource type="Script" uid="uid://c2y2kdc7yaf74" path="res://bubble.gd" id="1_05jx6"]
+[ext_resource type="Texture2D" uid="uid://cxge3bx141ayr" path="res://bubble_512x512/bubble_3.png" id="2_05jx6"]
+[ext_resource type="FontFile" uid="uid://d3xkhn5qitvno" path="res://kenney_ui-pack/Font/Kenney Future.ttf" id="3_4cx2n"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_1pskq"]
+font = ExtResource("3_4cx2n")
+font_size = 48
+
+[node name="Bubble" type="Node2D" node_paths=PackedStringArray("label", "outer")]
+script = ExtResource("1_05jx6")
+label = NodePath("Label")
+outer = NodePath("Outer")
+
+[node name="Outer" type="Sprite2D" parent="."]
+scale = Vector2(0.25, 0.25)
+texture = ExtResource("1_4a276")
+
+[node name="Inner" type="Sprite2D" parent="."]
+modulate = Color(0.109804, 0.623529, 0.843137, 1)
+scale = Vector2(0.15, 0.15)
+texture = ExtResource("2_05jx6")
+
+[node name="Label" type="Label" parent="."]
+offset_left = -13.0
+offset_top = -26.0
+offset_right = 40.0
+offset_bottom = 46.0
+text = "B"
+label_settings = SubResource("LabelSettings_1pskq")

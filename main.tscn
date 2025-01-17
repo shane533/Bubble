@@ -1,0 +1,63 @@
+[gd_scene load_steps=9 format=3 uid="uid://bpofcs1mxq03r"]
+
+[ext_resource type="Script" uid="uid://d04wcpr3pxl4o" path="res://main.gd" id="1_ycdy4"]
+[ext_resource type="PackedScene" uid="uid://blek7o4gkhsu6" path="res://bubble.tscn" id="2_0xm2m"]
+[ext_resource type="Texture2D" uid="uid://bjbi6xnaq05a8" path="res://kenney_ui-pack/PNG/Blue/Double/button_round_gloss.png" id="2_h2yge"]
+[ext_resource type="Texture2D" uid="uid://doumwhq4ut8jy" path="res://kenney_ui-pack/PNG/Grey/Default/button_square_depth_flat.png" id="2_ycdy4"]
+[ext_resource type="PackedScene" uid="uid://b5j6flcbneu7a" path="res://inner.tscn" id="3_1bvp3"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_h2yge"]
+size = Vector2(1280.6, 978.427)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_1bvp3"]
+radius = 50.0
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_lquwl"]
+size = Vector2(500, 50)
+
+[node name="Root" type="Node2D" node_paths=PackedStringArray("bubbleContainer", "physicArea")]
+script = ExtResource("1_ycdy4")
+bubbleContainer = NodePath("Area2D")
+physicArea = NodePath("Area2D")
+
+[node name="Background" type="Sprite2D" parent="."]
+position = Vector2(-154, -107)
+scale = Vector2(26.875, 16.75)
+texture = ExtResource("2_ycdy4")
+centered = false
+
+[node name="Bubble" parent="." instance=ExtResource("2_0xm2m")]
+position = Vector2(132, 308)
+
+[node name="Area2D" type="Area2D" parent="."]
+gravity_space_override = 3
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+position = Vector2(640.7, 491)
+shape = SubResource("RectangleShape2D_h2yge")
+debug_color = Color(0.800683, 0.194762, 0.905107, 0.42)
+
+[node name="RigidBody2D" parent="Area2D" instance=ExtResource("3_1bvp3")]
+position = Vector2(463, 476)
+
+[node name="RigidBody2D2" type="RigidBody2D" parent="Area2D"]
+position = Vector2(988, 415)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D/RigidBody2D2"]
+shape = SubResource("CircleShape2D_1bvp3")
+
+[node name="Sprite2D" type="Sprite2D" parent="Area2D/RigidBody2D2"]
+texture = ExtResource("2_h2yge")
+
+[node name="StaticBody2D" type="StaticBody2D" parent="Area2D"]
+position = Vector2(453, 792)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D/StaticBody2D"]
+shape = SubResource("RectangleShape2D_lquwl")
+
+[node name="StaticBody2D2" type="StaticBody2D" parent="Area2D"]
+position = Vector2(955, 695)
+
+[node name="CollisionShape2D" type="CollisionPolygon2D" parent="Area2D/StaticBody2D2"]
+scale = Vector2(10, 10)
+polygon = PackedVector2Array(0, 0, 8, -8, 8, 8, -8, 8, -8, -8)
