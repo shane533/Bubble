@@ -6,4 +6,5 @@
 script = ExtResource("1_45575")
 level_id = 0
 pop_limit = 999
+bubble_grow_time = Array[float]([])
 metadata/_custom_type_script = ExtResource("1_45575")

@@ -7,6 +7,7 @@ class_name Bubble
 @export var explosion: AnimatedSprite2D
 
 signal s_bubble_clicked(bubble, is_active)
+signal s_enter_empty_bubble(bubble, ball)
 
 var _is_moving:bool = false
 var _is_towards_left: bool = true
@@ -23,11 +24,27 @@ const MAX_SCALE:float = 1.8
 func _ready() -> void:
 	tween_floating()
 
-
 func init(p_char:String):
 	print("INIT BUBBLE %d" % get_instance_id())
 	target_char = p_char
-	label.text = p_char
+	match p_char:
+		"RESET":
+			label.visible = false
+			$InnerNode/Sprite2D.visible = true
+			$InnerNode/Sprite2D.texture = load("res://kenney_ui-pack/PNG/Extra/Default/icon_repeat_light.png")
+		"LIST":
+			label.visible = false
+			$InnerNode/Sprite2D.visible = true
+			$InnerNode/Sprite2D.texture = load("res://kenney_ui-pack/PNG/Extra/Default/icon_down_light.png")
+		"NEXT":
+			label.visible = false
+			$InnerNode/Sprite2D.visible = true
+			$InnerNode/Sprite2D.texture = load("res://kenney_ui-pack/PNG/Extra/Default/icon_play_light.png")
+		"EMPTY":
+			$InnerNode.visible = false
+		_:
+			$InnerNode.visible = true
+			label.text = p_char
 
 func start_move(is_left:bool, speed:float = 0, left_border:int = 0, right_border:int = 0):
 		_is_moving = true
@@ -105,7 +122,10 @@ func _process(delta: float) -> void:
 func _on_area_2d_body_entered(body: Node2D) -> void:
 	if body is Inner:
 		print("%s enterred this bubble!" % body.get_char())
-		s_bubble_clicked.emit(self, false)
+		if target_char == "EMPTY":
+			s_enter_empty_bubble.emit(self, body)
+		else:
+			s_bubble_clicked.emit(self, false)
 
 
 func _on_explode_animation_finished() -> void:

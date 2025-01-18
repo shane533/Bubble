@@ -1,4 +1,4 @@
-[gd_scene load_steps=28 format=3 uid="uid://bpofcs1mxq03r"]
+[gd_scene load_steps=29 format=3 uid="uid://bpofcs1mxq03r"]
 
 [ext_resource type="Script" uid="uid://d04wcpr3pxl4o" path="res://main.gd" id="1_ycdy4"]
 [ext_resource type="PackedScene" uid="uid://blek7o4gkhsu6" path="res://bubble.tscn" id="2_0xm2m"]
@@ -18,6 +18,7 @@
 [ext_resource type="Resource" uid="uid://cib3gw45yjjyd" path="res://level_config/level_4.tres" id="14_074og"]
 [ext_resource type="Resource" uid="uid://2l6tjdiwnk88" path="res://level_config/level_5.tres" id="15_vivmo"]
 [ext_resource type="Resource" uid="uid://jb1c27t1k8w6" path="res://level_config/level_6.tres" id="16_074og"]
+[ext_resource type="Resource" uid="uid://dain2kmjwn5dw" path="res://level_config/level_7.tres" id="17_cegan"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_h2yge"]
 size = Vector2(1280.6, 978.427)
@@ -30,7 +31,7 @@ size = Vector2(80.75, 998.5)
 
 [sub_resource type="LabelSettings" id="LabelSettings_272bh"]
 font = ExtResource("3_1bvp3")
-font_size = 48
+font_size = 64
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_272bh"]
 size = Vector2(25.5, 50.5)
@@ -51,7 +52,7 @@ font_size = 32
 
 [node name="Root" type="Node2D" node_paths=PackedStringArray("levels", "nextBubble", "levelLabel", "limitLabel")]
 script = ExtResource("1_ycdy4")
-levels = [NodePath("L0"), NodePath("L1"), NodePath("L2"), NodePath("L3"), NodePath("L4"), NodePath("L5"), NodePath("L6")]
+levels = [NodePath("L0"), NodePath("L1"), NodePath("L2"), NodePath("L3"), NodePath("L4"), NodePath("L5"), NodePath("L6"), NodePath("L7")]
 nextBubble = NodePath("TopRightUI/NextButton")
 levelLabel = NodePath("TopRightUI/LevelLabel")
 limitLabel = NodePath("TopRightUI/LimitLabel")
@@ -639,22 +640,22 @@ shape = SubResource("RectangleShape2D_7mycd")
 [node name="Bubbles" type="Node2D" parent="L2"]
 
 [node name="Bubble" parent="L2/Bubbles" instance=ExtResource("2_0xm2m")]
-position = Vector2(113, 86)
+position = Vector2(110, 195)
 
 [node name="Bubble2" parent="L2/Bubbles" instance=ExtResource("2_0xm2m")]
-position = Vector2(280, 189)
+position = Vector2(261, 79)
 
 [node name="Bubble3" parent="L2/Bubbles" instance=ExtResource("2_0xm2m")]
 position = Vector2(414, 293)
 
 [node name="Bubble4" parent="L2/Bubbles" instance=ExtResource("2_0xm2m")]
-position = Vector2(844, 84)
+position = Vector2(970, 80)
 
 [node name="Bubble5" parent="L2/Bubbles" instance=ExtResource("2_0xm2m")]
-position = Vector2(999, 191)
+position = Vector2(902, 310)
 
 [node name="Bubble6" parent="L2/Bubbles" instance=ExtResource("2_0xm2m")]
-position = Vector2(1139, 303)
+position = Vector2(795, 189)
 
 [node name="Label" type="Label" parent="L2"]
 offset_left = 47.0
@@ -1104,6 +1105,7 @@ text = "Click to pop the"
 label_settings = SubResource("LabelSettings_272bh")
 
 [node name="L4" type="Area2D" parent="." node_paths=PackedStringArray("bubbles", "holes")]
+visible = false
 gravity_space_override = 3
 script = ExtResource("2_272bh")
 bubbles = [NodePath("Bubbles/Bubble"), NodePath("Bubbles/BubbleU"), NodePath("Bubbles/Bubble3"), NodePath("Bubbles/Bubble4"), NodePath("Bubbles/BubbleL"), NodePath("Bubbles/BubbleE")]
@@ -1519,10 +1521,10 @@ shape = SubResource("RectangleShape2D_7mycd")
 [node name="Bubbles" type="Node2D" parent="L4"]
 
 [node name="Bubble" parent="L4/Bubbles" instance=ExtResource("2_0xm2m")]
-position = Vector2(113, 86)
+position = Vector2(104, 135)
 
 [node name="BubbleU" parent="L4/Bubbles" instance=ExtResource("2_0xm2m")]
-position = Vector2(331, 157)
+position = Vector2(322, 206)
 
 [node name="Bubble3" parent="L4/Bubbles" instance=ExtResource("2_0xm2m")]
 position = Vector2(257, 399)
@@ -2430,6 +2432,444 @@ offset_bottom = -31.0
 text = "Click to pop the"
 label_settings = SubResource("LabelSettings_272bh")
 
+[node name="L7" type="Area2D" parent="." node_paths=PackedStringArray("bubbles", "holes")]
+gravity_space_override = 3
+script = ExtResource("2_272bh")
+bubbles = [NodePath("Bubbles/Bubble"), NodePath("Bubbles/BubbleU"), NodePath("Bubbles/Bubble3"), NodePath("Bubbles/Bubble4"), NodePath("Bubbles/BubbleL"), NodePath("Bubbles/BubbleE")]
+holes = [NodePath("Bottom/OneBottomHole"), NodePath("Bottom/OneBottomHole2"), NodePath("Bottom/OneBottomHole3"), NodePath("Bottom/OneBottomHole4"), NodePath("Bottom/OneBottomHole5"), NodePath("Bottom/OneBottomHole6")]
+levelData = ExtResource("17_cegan")
+
+[node name="TextureRect" type="TextureRect" parent="L7"]
+offset_left = -2.0
+offset_top = -346.0
+offset_right = 1281.0
+offset_bottom = 947.0
+texture = ExtResource("2_7mycd")
+stretch_mode = 1
+
+[node name="Bottom" type="Node2D" parent="L7"]
+position = Vector2(0, 500)
+
+[node name="OneBottomHole" type="Node2D" parent="L7/Bottom" node_paths=PackedStringArray("label")]
+position = Vector2(180, -120)
+script = ExtResource("4_272bh")
+label = NodePath("Label")
+
+[node name="Triangle" type="StaticBody2D" parent="L7/Bottom/OneBottomHole"]
+position = Vector2(20, 0)
+scale = Vector2(0.3, 1)
+
+[node name="CollisionShape2D" type="CollisionPolygon2D" parent="L7/Bottom/OneBottomHole/Triangle"]
+scale = Vector2(12.8, 12.8)
+polygon = PackedVector2Array(1.25, 0, 9.84375, 8.67187, 9.84375, 9.84375, 0.078125, 9.92187, 0, 0)
+
+[node name="Sprite2D" type="Sprite2D" parent="L7/Bottom/OneBottomHole/Triangle"]
+texture = ExtResource("5_lquwl")
+centered = false
+
+[node name="Triangle2" type="StaticBody2D" parent="L7/Bottom/OneBottomHole"]
+position = Vector2(185, 1)
+rotation = 3.14159
+scale = Vector2(0.35, -1)
+
+[node name="CollisionShape2D" type="CollisionPolygon2D" parent="L7/Bottom/OneBottomHole/Triangle2"]
+scale = Vector2(12.8, 12.8)
+polygon = PackedVector2Array(1.25, 0, 9.84375, 8.67187, 9.84375, 9.84375, 0.078125, 9.92187, 0, 0)
+
+[node name="Sprite2D" type="Sprite2D" parent="L7/Bottom/OneBottomHole/Triangle2"]
+texture = ExtResource("5_lquwl")
+centered = false
+
+[node name="StaticBody2D" type="StaticBody2D" parent="L7/Bottom/OneBottomHole"]
+position = Vector2(45, 140)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="L7/Bottom/OneBottomHole/StaticBody2D"]
+position = Vector2(0.5, 14)
+shape = SubResource("RectangleShape2D_272bh")
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="L7/Bottom/OneBottomHole/StaticBody2D"]
+position = Vector2(109, 13)
+shape = SubResource("RectangleShape2D_272bh")
+
+[node name="Sprite2D" type="Sprite2D" parent="L7/Bottom/OneBottomHole/StaticBody2D"]
+position = Vector2(57, 2)
+texture = ExtResource("6_7mycd")
+
+[node name="Area2D" type="Area2D" parent="L7/Bottom/OneBottomHole"]
+position = Vector2(86, 167)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="L7/Bottom/OneBottomHole/Area2D"]
+position = Vector2(16, 5)
+shape = SubResource("RectangleShape2D_kek77")
+
+[node name="Label" type="Label" parent="L7/Bottom/OneBottomHole"]
+offset_left = 150.0
+offset_top = 110.0
+offset_right = 203.0
+offset_bottom = 182.0
+text = "B"
+label_settings = SubResource("LabelSettings_140vf")
+
+[node name="OneBottomHole2" type="Node2D" parent="L7/Bottom" node_paths=PackedStringArray("label")]
+position = Vector2(182, -40)
+script = ExtResource("4_272bh")
+label = NodePath("Label")
+
+[node name="Triangle" type="StaticBody2D" parent="L7/Bottom/OneBottomHole2"]
+visible = false
+scale = Vector2(0.45, 1)
+
+[node name="CollisionShape2D" type="CollisionPolygon2D" parent="L7/Bottom/OneBottomHole2/Triangle"]
+scale = Vector2(12.8, 12.8)
+polygon = PackedVector2Array(1.25, 0, 9.84375, 8.67187, 9.84375, 9.84375, 0.078125, 9.92187, 0, 0)
+
+[node name="Sprite2D" type="Sprite2D" parent="L7/Bottom/OneBottomHole2/Triangle"]
+texture = ExtResource("5_lquwl")
+centered = false
+
+[node name="Triangle2" type="StaticBody2D" parent="L7/Bottom/OneBottomHole2"]
+visible = false
+position = Vector2(200, 0)
+rotation = 3.14159
+scale = Vector2(0.45, -1)
+
+[node name="CollisionShape2D" type="CollisionPolygon2D" parent="L7/Bottom/OneBottomHole2/Triangle2"]
+scale = Vector2(12.8, 12.8)
+polygon = PackedVector2Array(1.25, 0, 9.84375, 8.67187, 9.84375, 9.84375, 0.078125, 9.92187, 0, 0)
+
+[node name="Sprite2D" type="Sprite2D" parent="L7/Bottom/OneBottomHole2/Triangle2"]
+texture = ExtResource("5_lquwl")
+centered = false
+
+[node name="StaticBody2D" type="StaticBody2D" parent="L7/Bottom/OneBottomHole2"]
+position = Vector2(45, 140)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="L7/Bottom/OneBottomHole2/StaticBody2D"]
+position = Vector2(0.5, 14)
+shape = SubResource("RectangleShape2D_272bh")
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="L7/Bottom/OneBottomHole2/StaticBody2D"]
+position = Vector2(109, 13)
+shape = SubResource("RectangleShape2D_272bh")
+
+[node name="Sprite2D" type="Sprite2D" parent="L7/Bottom/OneBottomHole2/StaticBody2D"]
+position = Vector2(57, 2)
+texture = ExtResource("6_7mycd")
+
+[node name="Area2D" type="Area2D" parent="L7/Bottom/OneBottomHole2"]
+position = Vector2(86, 167)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="L7/Bottom/OneBottomHole2/Area2D"]
+position = Vector2(16, 5)
+shape = SubResource("RectangleShape2D_kek77")
+
+[node name="Label" type="Label" parent="L7/Bottom/OneBottomHole2"]
+offset_left = 150.0
+offset_top = 110.0
+offset_right = 203.0
+offset_bottom = 182.0
+text = "B"
+label_settings = SubResource("LabelSettings_140vf")
+
+[node name="OneBottomHole3" type="Node2D" parent="L7/Bottom" node_paths=PackedStringArray("label")]
+position = Vector2(182, 40)
+script = ExtResource("4_272bh")
+label = NodePath("Label")
+
+[node name="Triangle" type="StaticBody2D" parent="L7/Bottom/OneBottomHole3"]
+visible = false
+scale = Vector2(0.45, 1)
+
+[node name="CollisionShape2D" type="CollisionPolygon2D" parent="L7/Bottom/OneBottomHole3/Triangle"]
+scale = Vector2(12.8, 12.8)
+polygon = PackedVector2Array(1.25, 0, 9.84375, 8.67187, 9.84375, 9.84375, 0.078125, 9.92187, 0, 0)
+
+[node name="Sprite2D" type="Sprite2D" parent="L7/Bottom/OneBottomHole3/Triangle"]
+texture = ExtResource("5_lquwl")
+centered = false
+
+[node name="Triangle2" type="StaticBody2D" parent="L7/Bottom/OneBottomHole3"]
+visible = false
+position = Vector2(200, 0)
+rotation = 3.14159
+scale = Vector2(0.45, -1)
+
+[node name="CollisionShape2D" type="CollisionPolygon2D" parent="L7/Bottom/OneBottomHole3/Triangle2"]
+scale = Vector2(12.8, 12.8)
+polygon = PackedVector2Array(1.25, 0, 9.84375, 8.67187, 9.84375, 9.84375, 0.078125, 9.92187, 0, 0)
+
+[node name="Sprite2D" type="Sprite2D" parent="L7/Bottom/OneBottomHole3/Triangle2"]
+texture = ExtResource("5_lquwl")
+centered = false
+
+[node name="StaticBody2D" type="StaticBody2D" parent="L7/Bottom/OneBottomHole3"]
+position = Vector2(45, 140)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="L7/Bottom/OneBottomHole3/StaticBody2D"]
+position = Vector2(0.5, 14)
+shape = SubResource("RectangleShape2D_272bh")
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="L7/Bottom/OneBottomHole3/StaticBody2D"]
+position = Vector2(109, 13)
+shape = SubResource("RectangleShape2D_272bh")
+
+[node name="CollisionShape2D3" type="CollisionShape2D" parent="L7/Bottom/OneBottomHole3/StaticBody2D"]
+position = Vector2(56.5, 48)
+shape = SubResource("RectangleShape2D_5vw27")
+
+[node name="Sprite2D" type="Sprite2D" parent="L7/Bottom/OneBottomHole3/StaticBody2D"]
+position = Vector2(57, 2)
+texture = ExtResource("6_7mycd")
+
+[node name="Area2D" type="Area2D" parent="L7/Bottom/OneBottomHole3"]
+position = Vector2(86, 167)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="L7/Bottom/OneBottomHole3/Area2D"]
+position = Vector2(16, 5)
+shape = SubResource("RectangleShape2D_kek77")
+
+[node name="Label" type="Label" parent="L7/Bottom/OneBottomHole3"]
+offset_left = 150.0
+offset_top = 110.0
+offset_right = 203.0
+offset_bottom = 182.0
+text = "B"
+label_settings = SubResource("LabelSettings_140vf")
+
+[node name="OneBottomHole4" type="Node2D" parent="L7/Bottom" node_paths=PackedStringArray("label")]
+position = Vector2(785, -120)
+script = ExtResource("4_272bh")
+label = NodePath("Label")
+
+[node name="Triangle" type="StaticBody2D" parent="L7/Bottom/OneBottomHole4"]
+position = Vector2(21, 1)
+scale = Vector2(0.3, 1)
+
+[node name="CollisionShape2D" type="CollisionPolygon2D" parent="L7/Bottom/OneBottomHole4/Triangle"]
+scale = Vector2(12.8, 12.8)
+polygon = PackedVector2Array(1.25, 0, 9.84375, 8.67187, 9.84375, 9.84375, 0.078125, 9.92187, 0, 0)
+
+[node name="Sprite2D" type="Sprite2D" parent="L7/Bottom/OneBottomHole4/Triangle"]
+texture = ExtResource("5_lquwl")
+centered = false
+
+[node name="Triangle2" type="StaticBody2D" parent="L7/Bottom/OneBottomHole4"]
+position = Vector2(179, -1)
+rotation = 3.14159
+scale = Vector2(0.3, -1)
+
+[node name="CollisionShape2D" type="CollisionPolygon2D" parent="L7/Bottom/OneBottomHole4/Triangle2"]
+scale = Vector2(12.8, 12.8)
+polygon = PackedVector2Array(1.25, 0, 9.84375, 8.67187, 9.84375, 9.84375, 0.078125, 9.92187, 0, 0)
+
+[node name="Sprite2D" type="Sprite2D" parent="L7/Bottom/OneBottomHole4/Triangle2"]
+texture = ExtResource("5_lquwl")
+centered = false
+
+[node name="StaticBody2D" type="StaticBody2D" parent="L7/Bottom/OneBottomHole4"]
+position = Vector2(45, 140)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="L7/Bottom/OneBottomHole4/StaticBody2D"]
+position = Vector2(0.5, 14)
+shape = SubResource("RectangleShape2D_272bh")
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="L7/Bottom/OneBottomHole4/StaticBody2D"]
+position = Vector2(109, 13)
+shape = SubResource("RectangleShape2D_272bh")
+
+[node name="Sprite2D" type="Sprite2D" parent="L7/Bottom/OneBottomHole4/StaticBody2D"]
+position = Vector2(57, 2)
+texture = ExtResource("6_7mycd")
+
+[node name="Area2D" type="Area2D" parent="L7/Bottom/OneBottomHole4"]
+position = Vector2(86, 167)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="L7/Bottom/OneBottomHole4/Area2D"]
+position = Vector2(16, 5)
+shape = SubResource("RectangleShape2D_kek77")
+
+[node name="Label" type="Label" parent="L7/Bottom/OneBottomHole4"]
+offset_left = 150.0
+offset_top = 110.0
+offset_right = 203.0
+offset_bottom = 182.0
+text = "B"
+label_settings = SubResource("LabelSettings_140vf")
+
+[node name="OneBottomHole5" type="Node2D" parent="L7/Bottom" node_paths=PackedStringArray("label")]
+position = Vector2(784, -40)
+script = ExtResource("4_272bh")
+label = NodePath("Label")
+
+[node name="Triangle" type="StaticBody2D" parent="L7/Bottom/OneBottomHole5"]
+visible = false
+scale = Vector2(0.45, 1)
+
+[node name="CollisionShape2D" type="CollisionPolygon2D" parent="L7/Bottom/OneBottomHole5/Triangle"]
+scale = Vector2(12.8, 12.8)
+polygon = PackedVector2Array(1.25, 0, 9.84375, 8.67187, 9.84375, 9.84375, 0.078125, 9.92187, 0, 0)
+
+[node name="Sprite2D" type="Sprite2D" parent="L7/Bottom/OneBottomHole5/Triangle"]
+texture = ExtResource("5_lquwl")
+centered = false
+
+[node name="Triangle2" type="StaticBody2D" parent="L7/Bottom/OneBottomHole5"]
+visible = false
+position = Vector2(200, 0)
+rotation = 3.14159
+scale = Vector2(0.45, -1)
+
+[node name="CollisionShape2D" type="CollisionPolygon2D" parent="L7/Bottom/OneBottomHole5/Triangle2"]
+scale = Vector2(12.8, 12.8)
+polygon = PackedVector2Array(1.25, 0, 9.84375, 8.67187, 9.84375, 9.84375, 0.078125, 9.92187, 0, 0)
+
+[node name="Sprite2D" type="Sprite2D" parent="L7/Bottom/OneBottomHole5/Triangle2"]
+texture = ExtResource("5_lquwl")
+centered = false
+
+[node name="StaticBody2D" type="StaticBody2D" parent="L7/Bottom/OneBottomHole5"]
+position = Vector2(45, 140)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="L7/Bottom/OneBottomHole5/StaticBody2D"]
+position = Vector2(0.5, 14)
+shape = SubResource("RectangleShape2D_272bh")
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="L7/Bottom/OneBottomHole5/StaticBody2D"]
+position = Vector2(109, 13)
+shape = SubResource("RectangleShape2D_272bh")
+
+[node name="Sprite2D" type="Sprite2D" parent="L7/Bottom/OneBottomHole5/StaticBody2D"]
+position = Vector2(57, 2)
+texture = ExtResource("6_7mycd")
+
+[node name="Area2D" type="Area2D" parent="L7/Bottom/OneBottomHole5"]
+position = Vector2(86, 167)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="L7/Bottom/OneBottomHole5/Area2D"]
+position = Vector2(16, 5)
+shape = SubResource("RectangleShape2D_kek77")
+
+[node name="Label" type="Label" parent="L7/Bottom/OneBottomHole5"]
+offset_left = 150.0
+offset_top = 110.0
+offset_right = 203.0
+offset_bottom = 182.0
+text = "B"
+label_settings = SubResource("LabelSettings_140vf")
+
+[node name="OneBottomHole6" type="Node2D" parent="L7/Bottom" node_paths=PackedStringArray("label")]
+position = Vector2(784, 40)
+script = ExtResource("4_272bh")
+label = NodePath("Label")
+
+[node name="Triangle" type="StaticBody2D" parent="L7/Bottom/OneBottomHole6"]
+visible = false
+scale = Vector2(0.45, 1)
+
+[node name="CollisionShape2D" type="CollisionPolygon2D" parent="L7/Bottom/OneBottomHole6/Triangle"]
+scale = Vector2(12.8, 12.8)
+polygon = PackedVector2Array(1.25, 0, 9.84375, 8.67187, 9.84375, 9.84375, 0.078125, 9.92187, 0, 0)
+
+[node name="Sprite2D" type="Sprite2D" parent="L7/Bottom/OneBottomHole6/Triangle"]
+texture = ExtResource("5_lquwl")
+centered = false
+
+[node name="Triangle2" type="StaticBody2D" parent="L7/Bottom/OneBottomHole6"]
+visible = false
+position = Vector2(200, 0)
+rotation = 3.14159
+scale = Vector2(0.45, -1)
+
+[node name="CollisionShape2D" type="CollisionPolygon2D" parent="L7/Bottom/OneBottomHole6/Triangle2"]
+scale = Vector2(12.8, 12.8)
+polygon = PackedVector2Array(1.25, 0, 9.84375, 8.67187, 9.84375, 9.84375, 0.078125, 9.92187, 0, 0)
+
+[node name="Sprite2D" type="Sprite2D" parent="L7/Bottom/OneBottomHole6/Triangle2"]
+texture = ExtResource("5_lquwl")
+centered = false
+
+[node name="StaticBody2D" type="StaticBody2D" parent="L7/Bottom/OneBottomHole6"]
+position = Vector2(45, 140)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="L7/Bottom/OneBottomHole6/StaticBody2D"]
+position = Vector2(0.5, 14)
+shape = SubResource("RectangleShape2D_272bh")
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="L7/Bottom/OneBottomHole6/StaticBody2D"]
+position = Vector2(109, 13)
+shape = SubResource("RectangleShape2D_272bh")
+
+[node name="CollisionShape2D3" type="CollisionShape2D" parent="L7/Bottom/OneBottomHole6/StaticBody2D"]
+position = Vector2(56.5, 48)
+shape = SubResource("RectangleShape2D_5vw27")
+
+[node name="Sprite2D" type="Sprite2D" parent="L7/Bottom/OneBottomHole6/StaticBody2D"]
+position = Vector2(57, 2)
+texture = ExtResource("6_7mycd")
+
+[node name="Area2D" type="Area2D" parent="L7/Bottom/OneBottomHole6"]
+position = Vector2(86, 167)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="L7/Bottom/OneBottomHole6/Area2D"]
+position = Vector2(16, 5)
+shape = SubResource("RectangleShape2D_kek77")
+
+[node name="Label" type="Label" parent="L7/Bottom/OneBottomHole6"]
+offset_left = 150.0
+offset_top = 110.0
+offset_right = 203.0
+offset_bottom = 182.0
+text = "B"
+label_settings = SubResource("LabelSettings_140vf")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="L7"]
+position = Vector2(640.7, 491)
+shape = SubResource("RectangleShape2D_h2yge")
+debug_color = Color(0.800683, 0.194762, 0.905107, 0.42)
+
+[node name="Border" type="Area2D" parent="L7"]
+position = Vector2(453, 792)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="L7/Border"]
+position = Vector2(195.5, 183)
+shape = SubResource("RectangleShape2D_lquwl")
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="L7/Border"]
+position = Vector2(-633, -291.75)
+shape = SubResource("RectangleShape2D_7mycd")
+
+[node name="CollisionShape2D3" type="CollisionShape2D" parent="L7/Border"]
+position = Vector2(1024, -290)
+shape = SubResource("RectangleShape2D_7mycd")
+
+[node name="Bubbles" type="Node2D" parent="L7"]
+
+[node name="Bubble" parent="L7/Bubbles" instance=ExtResource("2_0xm2m")]
+position = Vector2(271, 81)
+
+[node name="BubbleU" parent="L7/Bubbles" instance=ExtResource("2_0xm2m")]
+position = Vector2(120, 185)
+
+[node name="Bubble3" parent="L7/Bubbles" instance=ExtResource("2_0xm2m")]
+position = Vector2(418, 185)
+
+[node name="Bubble4" parent="L7/Bubbles" instance=ExtResource("2_0xm2m")]
+position = Vector2(889, 79)
+
+[node name="BubbleL" parent="L7/Bubbles" instance=ExtResource("2_0xm2m")]
+position = Vector2(1051, 185)
+
+[node name="BubbleE" parent="L7/Bubbles" instance=ExtResource("2_0xm2m")]
+position = Vector2(708, 165)
+
+[node name="Label" type="Label" parent="L7"]
+offset_left = 47.0
+offset_top = -85.0
+offset_right = 588.0
+offset_bottom = -31.0
+text = "Click to pop the"
+label_settings = SubResource("LabelSettings_272bh")
+
 [node name="TopRightUI" type="Node2D" parent="."]
 
 [node name="ResetButton" parent="TopRightUI" instance=ExtResource("2_0xm2m")]
@@ -2546,6 +2986,18 @@ label_settings = SubResource("LabelSettings_7mycd")
 [connection signal="body_exited" from="L6/Bottom/OneBottomHole5/Area2D" to="L6/Bottom/OneBottomHole5" method="_on_area_2d_body_exited"]
 [connection signal="body_entered" from="L6/Bottom/OneBottomHole6/Area2D" to="L6/Bottom/OneBottomHole6" method="_on_area_2d_body_entered"]
 [connection signal="body_exited" from="L6/Bottom/OneBottomHole6/Area2D" to="L6/Bottom/OneBottomHole6" method="_on_area_2d_body_exited"]
+[connection signal="body_entered" from="L7/Bottom/OneBottomHole/Area2D" to="L7/Bottom/OneBottomHole" method="_on_area_2d_body_entered"]
+[connection signal="body_exited" from="L7/Bottom/OneBottomHole/Area2D" to="L7/Bottom/OneBottomHole" method="_on_area_2d_body_exited"]
+[connection signal="body_entered" from="L7/Bottom/OneBottomHole2/Area2D" to="L7/Bottom/OneBottomHole2" method="_on_area_2d_body_entered"]
+[connection signal="body_exited" from="L7/Bottom/OneBottomHole2/Area2D" to="L7/Bottom/OneBottomHole2" method="_on_area_2d_body_exited"]
+[connection signal="body_entered" from="L7/Bottom/OneBottomHole3/Area2D" to="L7/Bottom/OneBottomHole3" method="_on_area_2d_body_entered"]
+[connection signal="body_exited" from="L7/Bottom/OneBottomHole3/Area2D" to="L7/Bottom/OneBottomHole3" method="_on_area_2d_body_exited"]
+[connection signal="body_entered" from="L7/Bottom/OneBottomHole4/Area2D" to="L7/Bottom/OneBottomHole4" method="_on_area_2d_body_entered"]
+[connection signal="body_exited" from="L7/Bottom/OneBottomHole4/Area2D" to="L7/Bottom/OneBottomHole4" method="_on_area_2d_body_exited"]
+[connection signal="body_entered" from="L7/Bottom/OneBottomHole5/Area2D" to="L7/Bottom/OneBottomHole5" method="_on_area_2d_body_entered"]
+[connection signal="body_exited" from="L7/Bottom/OneBottomHole5/Area2D" to="L7/Bottom/OneBottomHole5" method="_on_area_2d_body_exited"]
+[connection signal="body_entered" from="L7/Bottom/OneBottomHole6/Area2D" to="L7/Bottom/OneBottomHole6" method="_on_area_2d_body_entered"]
+[connection signal="body_exited" from="L7/Bottom/OneBottomHole6/Area2D" to="L7/Bottom/OneBottomHole6" method="_on_area_2d_body_exited"]
 [connection signal="s_bubble_clicked" from="TopRightUI/ResetButton" to="." method="on_bubble_clicked"]
 [connection signal="s_bubble_clicked" from="TopRightUI/ListButton" to="." method="on_bubble_clicked"]
 [connection signal="s_bubble_clicked" from="TopRightUI/NextButton" to="." method="on_bubble_clicked"]

@@ -34,8 +34,7 @@ func _on_area_2d_body_entered(body: Node2D) -> void:
 func _on_area_2d_body_exited(body: Node2D) -> void:
 	if body is Inner:
 		#print("%s exit this hole!" % body.get_char())
-		if _target_char == body.get_char():
-			_is_succeed = false
 		if _occupied == body:
+			_is_succeed = false
 			label.self_modulate = Color.WHITE
 	pass # Replace with function body.

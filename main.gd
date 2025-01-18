@@ -24,14 +24,14 @@ var _is_showing_levels: bool = false
 #var _current_level_index: int = 0
 var _is_first_click: bool = false
 var _click_limit: int = 99
-
-
+var _empty_bubble:Bubble
 
 func _ready() -> void:
 	print("Main Init")
 	init_level(Global.current_level)
 
 func init_level(level_index):
+	$TopRightUI/NextButton.visible = false
 	print("INIT LEVEL %d" % level_index)
 	for b in _balls:
 		b.queue_free()
@@ -65,15 +65,15 @@ func init_level(level_index):
 		match Global.current_level:
 			
 			1:
-				b.start_move(randi()%2==1, 100+randi()%50, b.position.x - 150, b.position.x+150)
+				b.start_move(randi()%2==1, 100+randi()%50, b.position.x - 100, b.position.x+100)
 			2:
-				b.start_move(false, 150+randi()%50, 50 + 600 * (i/3), 600+ 600*(i/3))
+				b.start_move(false, 170, 50 + 500 * (i/3), 500+ 500*(i/3))
 			3:
-				b.start_move(false, 150, 50 + 600 * (i/3), 600+ 600*(i/3))
+				b.start_move(false, 150, 50 + 500 * (i/3), 500+ 500*(i/3))
 			4:
-				b.start_move(false, 150+randi()%50, 50, 1000)
+				b.start_move(false, 150+randi()%50, 100, 1100)
 			6:
-				b.start_move(i%2==1, 150, 50, 1200)
+				b.start_move(i%2==1, 150, 100, 1100)
 				#b.start_grow(5)
 		if len(level.levelData.bubble_grow_time) > i:
 			b.start_grow(level.levelData.bubble_grow_time[i])
@@ -81,7 +81,31 @@ func init_level(level_index):
 		var h = level.holes[i]
 		h.init(code[i])
 		h.s_ball_in_hole.connect(on_ball_in_hole)
+	
+	if Global.current_level == 7: # have empty bubble
+		spawn_empty_bubble()
 
+func spawn_empty_bubble():
+	_empty_bubble = bubble_ts.instantiate(PackedScene.GEN_EDIT_STATE_DISABLED)
+	_empty_bubble.init("EMPTY")
+	_empty_bubble.position = Vector2(600, 300)
+	var c = 0
+	for b in levels[Global.current_level].bubbles:
+		if b == null:
+			continue
+		if b.position.x > 600:
+			c += 1
+		else:
+			c -= 1
+	_empty_bubble.start_move(c<=0, 150, 100, 1100)
+	_empty_bubble.s_bubble_clicked.connect(on_bubble_clicked)
+	_empty_bubble.s_enter_empty_bubble.connect(on_enter_empty_bubble)
+	levels[Global.current_level].add_child(_empty_bubble)
+
+func on_enter_empty_bubble(bubble:Bubble, ball:Inner):
+	print("Main.enter empty bubble %s" % ball.get_char())
+	bubble.init(ball.get_char())
+	ball.queue_free()
 	
 func on_bubble_clicked(bubble, is_active):
 	print("Main.Bubble %s clicked" % bubble.get_char())
@@ -95,13 +119,13 @@ func on_bubble_clicked(bubble, is_active):
 		return
 		
 	if is_active and code == "NEXT":
-		bubble.visible = false
 		next_level()
 		return
 		
 	if is_active and code.is_valid_int():
 		print("Jump to Level %d" % int(code))
-		init_level(int(code))
+		Global.current_level = int(code)
+		reset_level()
 		return
 		
 	if code in ["B","U","L","E"]:
@@ -150,7 +174,8 @@ func reset_level():
 	
 func next_level():
 	if Global.current_level < len(levels)-1:
-		init_level(Global.current_level+1)
+		Global.current_level += 1
+		reset_level()
 
 func pop_the_bubble(bubble: Bubble) -> void:
 	var obj = inner_ts.instantiate(PackedScene.GEN_EDIT_STATE_DISABLED)
@@ -159,6 +184,9 @@ func pop_the_bubble(bubble: Bubble) -> void:
 	bubble.explode()
 	levels[Global.current_level].add_child(obj)
 	_balls.append(obj)
+	if bubble == _empty_bubble:
+		await get_tree().create_timer(1).timeout
+		spawn_empty_bubble()
 	
 func on_ball_in_hole(ball:Inner, is_succeed:bool):
 	if not is_succeed:
@@ -176,5 +204,4 @@ func win():
 	nextBubble.scale = Vector2(0.01, 0.01)
 	create_tween().tween_property(nextBubble, "scale", Vector2(1.5,1.5), 0.5)
 	nextBubble.visible = true
-	
 	
