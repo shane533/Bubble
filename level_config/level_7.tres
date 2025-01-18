@@ -7,4 +7,5 @@ script = ExtResource("1_oaykx")
 level_id = 7
 pop_limit = 8
 bubble_grow_time = Array[float]([])
+hint = "BUBBLE TRANSFERS"
 metadata/_custom_type_script = ExtResource("1_oaykx")

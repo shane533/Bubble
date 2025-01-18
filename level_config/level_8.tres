@@ -7,4 +7,5 @@ script = ExtResource("1_yjc6s")
 level_id = 8
 pop_limit = 999
 bubble_grow_time = Array[float]([38.0, 16.0, 24.0, 56.0, 3.0, 46.0])
+hint = "Watch the direction of empty bubble"
 metadata/_custom_type_script = ExtResource("1_yjc6s")

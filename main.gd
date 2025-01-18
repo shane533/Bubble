@@ -10,6 +10,8 @@ class_name Main
 @export var nextBubble:Bubble
 @export var levelLabel:Label
 @export var limitLabel:Label
+@export var hintLabel:Label
+@export var finNode:Node
 
 const bubble_ts = preload("res://bubble.tscn")
 const inner_ts = preload("res://inner.tscn")
@@ -55,6 +57,13 @@ func init_level(level_index):
 	
 	_click_limit = level.levelData.pop_limit
 	limitLabel.visible = _click_limit < 99
+	
+	if level.levelData.hint != "":
+		hintLabel.visible = true
+		hintLabel.text = "Hint: %s" % level.levelData.hint
+	else:
+		hintLabel.visible = false
+	
 	update_click_limit()
 	
 	var code = "BUBBLE"
@@ -74,6 +83,9 @@ func init_level(level_index):
 				b.start_move(false, 150+randi()%50, 100, 1100)
 			6:
 				b.start_move(i%2==1, 150, 100, 1100)
+			9:
+				if i==1:
+					b.start_move(true, 150, 100, 1100)
 				#b.start_grow(5)
 		if len(level.levelData.bubble_grow_time) > i:
 			b.start_grow(level.levelData.bubble_grow_time[i])
@@ -82,7 +94,7 @@ func init_level(level_index):
 		h.init(code[i])
 		h.s_ball_in_hole.connect(on_ball_in_hole)
 	
-	if Global.current_level in [7,8]: # have empty bubble
+	if Global.current_level in [7,8,9]: # have empty bubble
 		spawn_empty_bubble()
 
 func spawn_empty_bubble():
@@ -176,6 +188,35 @@ func next_level():
 	if Global.current_level < len(levels)-1:
 		Global.current_level += 1
 		reset_level()
+	else:
+		fin()
+		
+func fin():
+	var finBubble = bubble_ts.instantiate()
+	finBubble.scale = Vector2(200,200)
+	finBubble.visible = true
+	finBubble.init("EMPTY")
+	finBubble.s_bubble_clicked.connect(on_fin_bubble_clicked)
+	finNode.add_child(finBubble)
+	
+	var tween = create_tween()
+	
+	tween.parallel().tween_property(self, "position", Vector2(640, 360), 10)
+	tween.parallel().tween_property(self, "scale", Vector2(0.01,0.01), 10)
+	tween.parallel().tween_property(levels[Global.current_level], "modulate:a", 0.01, 10)
+	#tween.tween_callback(hide_level)
+	#tween.tween_property(self, "scale", Vector2(0.01,0.01), 5)
+
+func hide_level():
+	levels[Global.current_level].visible = false
+
+func on_fin_bubble_clicked(bubble, is_active):
+	bubble.explode()
+	$FinNode/Label.text = "Thank you for playing!"
+	print("FIN")
+	await get_tree().create_timer(5).timeout
+	Global.current_level = 0
+	reset_level()
 
 func pop_the_bubble(bubble: Bubble) -> void:
 	var obj = inner_ts.instantiate(PackedScene.GEN_EDIT_STATE_DISABLED)

@@ -6,4 +6,6 @@
 script = ExtResource("1_orsiy")
 level_id = 4
 pop_limit = 4
+bubble_grow_time = Array[float]([])
+hint = "WHO GO FIRST"
 metadata/_custom_type_script = ExtResource("1_orsiy")

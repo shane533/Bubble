@@ -6,4 +6,6 @@
 script = ExtResource("1_n5yf0")
 level_id = 3
 pop_limit = 4
+bubble_grow_time = Array[float]([])
+hint = "TWO Bubbles with one stone"
 metadata/_custom_type_script = ExtResource("1_n5yf0")

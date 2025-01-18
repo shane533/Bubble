@@ -1,4 +1,4 @@
-[gd_scene load_steps=30 format=3 uid="uid://bpofcs1mxq03r"]
+[gd_scene load_steps=34 format=3 uid="uid://bpofcs1mxq03r"]
 
 [ext_resource type="Script" uid="uid://d04wcpr3pxl4o" path="res://main.gd" id="1_ycdy4"]
 [ext_resource type="PackedScene" uid="uid://blek7o4gkhsu6" path="res://bubble.tscn" id="2_0xm2m"]
@@ -20,6 +20,12 @@
 [ext_resource type="Resource" uid="uid://jb1c27t1k8w6" path="res://level_config/level_6.tres" id="16_074og"]
 [ext_resource type="Resource" uid="uid://dain2kmjwn5dw" path="res://level_config/level_7.tres" id="17_cegan"]
 [ext_resource type="Resource" uid="uid://dwpcfc1wicgdb" path="res://level_config/level_8.tres" id="18_82xsv"]
+[ext_resource type="Resource" uid="uid://b1yjb0gcm1hai" path="res://level_config/level_9.tres" id="19_getpj"]
+[ext_resource type="FontFile" uid="uid://cx7krx32b250n" path="res://kenney_ui-pack/Font/kenney_kenney-fonts/Kenney Mini Square.ttf" id="22_ryguw"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_getpj"]
+font = ExtResource("3_1bvp3")
+font_size = 3200
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_h2yge"]
 size = Vector2(1280.6, 978.427)
@@ -51,12 +57,27 @@ size = Vector2(234.5, 22)
 font = ExtResource("3_1bvp3")
 font_size = 32
 
-[node name="Root" type="Node2D" node_paths=PackedStringArray("levels", "nextBubble", "levelLabel", "limitLabel")]
+[sub_resource type="LabelSettings" id="LabelSettings_d13ii"]
+font = ExtResource("22_ryguw")
+
+[node name="Root" type="Node2D" node_paths=PackedStringArray("levels", "nextBubble", "levelLabel", "limitLabel", "hintLabel", "finNode")]
 script = ExtResource("1_ycdy4")
-levels = [NodePath("L0"), NodePath("L1"), NodePath("L2"), NodePath("L3"), NodePath("L4"), NodePath("L5"), NodePath("L6"), NodePath("L7"), NodePath("L8")]
+levels = [NodePath("L0"), NodePath("L1"), NodePath("L2"), NodePath("L3"), NodePath("L4"), NodePath("L5"), NodePath("L6"), NodePath("L7"), NodePath("L8"), NodePath("L9")]
 nextBubble = NodePath("TopRightUI/NextButton")
 levelLabel = NodePath("TopRightUI/LevelLabel")
 limitLabel = NodePath("TopRightUI/LimitLabel")
+hintLabel = NodePath("TopRightUI/HintLabel")
+finNode = NodePath("FinNode")
+
+[node name="FinNode" type="Node2D" parent="."]
+
+[node name="Label" type="Label" parent="FinNode"]
+offset_left = -27328.0
+offset_top = -18465.0
+offset_right = -27147.0
+offset_bottom = -18442.0
+text = "Click to pop the"
+label_settings = SubResource("LabelSettings_getpj")
 
 [node name="L0" type="Area2D" parent="." node_paths=PackedStringArray("bubbles", "holes")]
 position = Vector2(0, 250)
@@ -2955,6 +2976,90 @@ offset_bottom = -31.0
 text = "Click to pop the"
 label_settings = SubResource("LabelSettings_272bh")
 
+[node name="L9" type="Area2D" parent="." node_paths=PackedStringArray("bubbles", "holes")]
+gravity_space_override = 3
+script = ExtResource("2_272bh")
+bubbles = [NodePath("Bubbles/BubbleB1"), NodePath("Bubbles/BubbleU"), NodePath("Bubbles/BubbleB2"), NodePath("Bubbles/BubbleB3"), NodePath("Bubbles/BubbleL"), NodePath("Bubbles/BubbleE")]
+holes = [NodePath("Bottom/OneBottomHole"), NodePath("Bottom/OneBottomHole2"), NodePath("Bottom/OneBottomHole3"), NodePath("Bottom/OneBottomHole4"), NodePath("Bottom/OneBottomHole5"), NodePath("Bottom/OneBottomHole6")]
+levelData = ExtResource("19_getpj")
+
+[node name="TextureRect" type="TextureRect" parent="L9"]
+offset_left = -2.0
+offset_top = -346.0
+offset_right = 1281.0
+offset_bottom = 947.0
+texture = ExtResource("2_7mycd")
+stretch_mode = 1
+
+[node name="Bottom" type="Node2D" parent="L9"]
+position = Vector2(0, 500)
+
+[node name="OneBottomHole" parent="L9/Bottom" instance=ExtResource("4_lquwl")]
+position = Vector2(50, 0)
+
+[node name="OneBottomHole2" parent="L9/Bottom" instance=ExtResource("4_lquwl")]
+position = Vector2(250, 0)
+
+[node name="OneBottomHole3" parent="L9/Bottom" instance=ExtResource("4_lquwl")]
+position = Vector2(450, 0)
+
+[node name="OneBottomHole4" parent="L9/Bottom" instance=ExtResource("4_lquwl")]
+position = Vector2(650, 0)
+
+[node name="OneBottomHole5" parent="L9/Bottom" instance=ExtResource("4_lquwl")]
+position = Vector2(850, 0)
+
+[node name="OneBottomHole6" parent="L9/Bottom" instance=ExtResource("4_lquwl")]
+position = Vector2(1050, 0)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="L9"]
+position = Vector2(640.7, 491)
+shape = SubResource("RectangleShape2D_h2yge")
+debug_color = Color(0.800683, 0.194762, 0.905107, 0.42)
+
+[node name="Border" type="Area2D" parent="L9"]
+position = Vector2(453, 792)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="L9/Border"]
+position = Vector2(195.5, 183)
+shape = SubResource("RectangleShape2D_lquwl")
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="L9/Border"]
+position = Vector2(-633, -291.75)
+shape = SubResource("RectangleShape2D_7mycd")
+
+[node name="CollisionShape2D3" type="CollisionShape2D" parent="L9/Border"]
+position = Vector2(1024, -290)
+shape = SubResource("RectangleShape2D_7mycd")
+
+[node name="Bubbles" type="Node2D" parent="L9"]
+
+[node name="BubbleB1" parent="L9/Bubbles" instance=ExtResource("2_0xm2m")]
+position = Vector2(132, 141)
+
+[node name="BubbleU" parent="L9/Bubbles" instance=ExtResource("2_0xm2m")]
+position = Vector2(341, 275)
+
+[node name="BubbleB2" parent="L9/Bubbles" instance=ExtResource("2_0xm2m")]
+position = Vector2(592, 95)
+
+[node name="BubbleB3" parent="L9/Bubbles" instance=ExtResource("2_0xm2m")]
+position = Vector2(687, 193)
+
+[node name="BubbleL" parent="L9/Bubbles" instance=ExtResource("2_0xm2m")]
+position = Vector2(944, 198)
+
+[node name="BubbleE" parent="L9/Bubbles" instance=ExtResource("2_0xm2m")]
+position = Vector2(830, 90)
+
+[node name="Label" type="Label" parent="L9"]
+offset_left = 47.0
+offset_top = -85.0
+offset_right = 588.0
+offset_bottom = -31.0
+text = "Click to pop the"
+label_settings = SubResource("LabelSettings_272bh")
+
 [node name="TopRightUI" type="Node2D" parent="."]
 
 [node name="ResetButton" parent="TopRightUI" instance=ExtResource("2_0xm2m")]
@@ -3008,8 +3113,17 @@ offset_left = 485.0
 offset_top = 401.0
 offset_right = 715.0
 offset_bottom = 437.0
-text = "Pop LIIMIT: "
+text = "Pop LIMIT: "
 label_settings = SubResource("LabelSettings_7mycd")
+
+[node name="HintLabel" type="Label" parent="TopRightUI"]
+offset_left = 485.0
+offset_top = 445.0
+offset_right = 732.0
+offset_bottom = 481.0
+text = "Hint: Time IT"
+label_settings = SubResource("LabelSettings_d13ii")
+autowrap_mode = 2
 
 [connection signal="body_entered" from="L2/Bottom/OneBottomHole/Area2D" to="L2/Bottom/OneBottomHole" method="_on_area_2d_body_entered"]
 [connection signal="body_exited" from="L2/Bottom/OneBottomHole/Area2D" to="L2/Bottom/OneBottomHole" method="_on_area_2d_body_exited"]
