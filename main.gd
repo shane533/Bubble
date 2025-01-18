@@ -18,10 +18,14 @@ const hole_ts = preload("res://bottom_hole.tscn")
 const WIN_COUNT = 6
 
 var _balls: Array = []
+var _levelBubbles: Array = []
 
+var _is_showing_levels: bool = false
 #var _current_level_index: int = 0
 var _is_first_click: bool = false
 var _click_limit: int = 99
+
+
 
 func _ready() -> void:
 	print("Main Init")
@@ -67,7 +71,9 @@ func init_level(level_index):
 			3:
 				b.start_move(false, 150, 50 + 600 * (i/3), 600+ 600*(i/3))
 			4:
-				b.start_move(false, 150+randi()%50, 50, 1200)
+				b.start_move(false, 150+randi()%50, 50, 1000)
+			6:
+				b.start_move(i%2==1, 150, 50, 1200)
 				#b.start_grow(5)
 		if len(level.levelData.bubble_grow_time) > i:
 			b.start_grow(level.levelData.bubble_grow_time[i])
@@ -79,13 +85,24 @@ func init_level(level_index):
 	
 func on_bubble_clicked(bubble, is_active):
 	print("Main.Bubble %s clicked" % bubble.get_char())
-	var code = bubble.get_char()
+	var code:String = bubble.get_char()
 	if is_active and code == "RESET":
 		reset_level()
-	
+		return 
+		
+	if is_active and code == "LIST":
+		show_hide_levels()
+		return
+		
 	if is_active and code == "NEXT":
 		bubble.visible = false
 		next_level()
+		return
+		
+	if is_active and code.is_valid_int():
+		print("Jump to Level %d" % int(code))
+		init_level(int(code))
+		return
 		
 	if code in ["B","U","L","E"]:
 		if is_active:
@@ -99,6 +116,21 @@ func on_bubble_clicked(bubble, is_active):
 			_is_first_click = false
 			await get_tree().create_timer(0.5).timeout
 		pop_the_bubble(bubble)
+
+func show_hide_levels():
+	if _is_showing_levels:
+		for b in _levelBubbles:
+			b.queue_free()
+		_levelBubbles.clear()
+	else:
+		for i in range(len(levels)):
+			var lb = bubble_ts.instantiate(PackedScene.GEN_EDIT_STATE_DISABLED)
+			lb.init("%d" % i)
+			lb.position.y = (i+1) * 120
+			lb.s_bubble_clicked.connect(on_bubble_clicked)
+			$TopRightUI/ListButton.add_child(lb)
+			_levelBubbles.append(lb)
+	_is_showing_levels = !_is_showing_levels
 
 func red_blink_limit_label():
 	var tween = create_tween()

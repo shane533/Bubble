@@ -1,4 +1,4 @@
 extends Node
 
 
-var current_level:int = 5
+var current_level:int = 4

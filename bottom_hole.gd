@@ -20,7 +20,7 @@ func is_succeed() -> bool:
 func _on_area_2d_body_entered(body: Node2D) -> void:
 	if body is Inner:
 		_occupied = body
-		print("%s enterred this hole!" % body.get_char())
+		#print("%s enterred this hole!" % body.get_char())
 		if _target_char == body.get_char():
 			label.self_modulate = Color.GREEN
 			_is_succeed = true
@@ -33,7 +33,7 @@ func _on_area_2d_body_entered(body: Node2D) -> void:
 
 func _on_area_2d_body_exited(body: Node2D) -> void:
 	if body is Inner:
-		print("%s exit this hole!" % body.get_char())
+		#print("%s exit this hole!" % body.get_char())
 		if _target_char == body.get_char():
 			_is_succeed = false
 		if _occupied == body:

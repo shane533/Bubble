@@ -17,8 +17,8 @@ var _speed:float
 var _is_growing:bool = false
 var _growing_time:float = 1
 const BASE_SCALE:float = 1
-const GLOW_SCALE:float = 1.3
-const MAX_SCALE:float = 1.5
+const GLOW_SCALE:float = 1.5
+const MAX_SCALE:float = 1.8
 
 func _ready() -> void:
 	tween_floating()
@@ -43,12 +43,14 @@ func start_grow(grow_time:float):
 func _input(event: InputEvent) -> void:
 	if not self.is_visible_in_tree():
 		return
+	if explosion.is_playing():
+		return
 	if event is InputEventMouseButton and event.is_pressed() and (event as InputEventMouseButton).button_index == MOUSE_BUTTON_LEFT:
 		if outer.get_rect().has_point(outer.to_local(event.position)):
 			if target_char != "":
-				print("Bubble %s clicked" % target_char)
+				print("Bubble.bubble %s clicked" % target_char)
 			else:
-				print("Bubble %d clicked" % get_instance_id())
+				print("Bubble.bubble %d clicked" % get_instance_id())
 			s_bubble_clicked.emit(self, true)
 
 func get_char():
@@ -56,6 +58,7 @@ func get_char():
 	
 func explode():
 	_is_moving= false
+	_is_growing = false
 	explosion.frame = 0
 	explosion.visible = true
 	outer.visible = false
@@ -101,7 +104,7 @@ func _process(delta: float) -> void:
 
 func _on_area_2d_body_entered(body: Node2D) -> void:
 	if body is Inner:
-		print("%s enterred this hole!" % body.get_char())
+		print("%s enterred this bubble!" % body.get_char())
 		s_bubble_clicked.emit(self, false)
 
 
