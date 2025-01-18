@@ -34,10 +34,12 @@ func init_level(level_index):
 	_balls.clear()
 	for l in levels:
 		l.visible = false
+		l.position.y= 2000
 		l.process_mode =Node.PROCESS_MODE_DISABLED
 	Global.current_level = level_index
 	var level:Level = levels[level_index]
 	level.visible = true
+	level.position.y = 0
 	level.process_mode = Node.PROCESS_MODE_INHERIT
 	#level.reset()
 	if level_index == 0:
@@ -47,16 +49,8 @@ func init_level(level_index):
 	levelLabel.visible = level_index != 0
 	levelLabel.text = "Level %d" % level_index
 	
-	
-	match Global.current_level:
-		0,1,2:
-			_click_limit = 999
-		3:
-			_click_limit = 4
-		4:
-			_click_limit = 4
-			
 	limitLabel.visible = level_index > 2
+	_click_limit = level.levelData.pop_limit
 	update_click_limit()
 	
 	var code = "BUBBLE"
@@ -75,6 +69,8 @@ func init_level(level_index):
 			4:
 				b.start_move(false, 150+randi()%50, 50, 1200)
 				#b.start_grow(5)
+		if len(level.levelData.bubble_grow_time) > i:
+			b.start_grow(level.levelData.bubble_grow_time[i])
 		b.s_bubble_clicked.connect(on_bubble_clicked)
 		var h = level.holes[i]
 		h.init(code[i])

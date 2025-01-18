@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="LevelData" load_steps=2 format=3 uid="uid://b08wdhpoors8f"]
+
+[ext_resource type="Script" uid="uid://cqwmilv5c3bei" path="res://level_data.gd" id="1_pvv4r"]
+
+[resource]
+script = ExtResource("1_pvv4r")
+level_id = 1
+pop_limit = 999
+metadata/_custom_type_script = ExtResource("1_pvv4r")
