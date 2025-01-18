@@ -6,10 +6,10 @@
 [ext_resource type="FontFile" uid="uid://d3xkhn5qitvno" path="res://kenney_ui-pack/Font/Kenney Future.ttf" id="4_ce0xg"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_272bh"]
-size = Vector2(25, 50.5)
+size = Vector2(25.5, 50.5)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_5vw27"]
-size = Vector2(402, 22)
+size = Vector2(234.5, 22)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_kek77"]
 size = Vector2(52, 10)

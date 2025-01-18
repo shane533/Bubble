@@ -53,6 +53,8 @@ func init_level(level_index):
 			_click_limit = 999
 		3:
 			_click_limit = 4
+		4:
+			_click_limit = 4
 			
 	limitLabel.visible = level_index > 2
 	update_click_limit()
@@ -61,18 +63,18 @@ func init_level(level_index):
 	for i in range(len(code)):
 		var b = level.bubbles[i]
 		var is_moving:bool = Global.current_level in [1,2]
+		b.init(code[i])
 		match Global.current_level:
-			0:
-				b.init(code[i])
+			
 			1:
-				b.init(code[i])
 				b.start_move(randi()%2==1, 100+randi()%50, b.position.x - 150, b.position.x+150)
 			2:
-				b.init(code[i])
 				b.start_move(false, 150+randi()%50, 50 + 600 * (i/3), 600+ 600*(i/3))
 			3:
-				b.init(code[i])
 				b.start_move(false, 150, 50 + 600 * (i/3), 600+ 600*(i/3))
+			4:
+				b.start_move(false, 150+randi()%50, 50, 1200)
+				#b.start_grow(5)
 		b.s_bubble_clicked.connect(on_bubble_clicked)
 		var h = level.holes[i]
 		h.init(code[i])

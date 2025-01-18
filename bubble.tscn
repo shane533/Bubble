@@ -7,10 +7,6 @@
 [ext_resource type="Texture2D" uid="uid://caywa2mrgynkg" path="res://kenney_ui-pack/PNG/Extra/Default/icon_repeat_light.png" id="5_4cx2n"]
 [ext_resource type="Texture2D" uid="uid://b0kf88lxomb2c" path="res://Free Smoke Fx  Pixel 05.png" id="6_1pskq"]
 
-[sub_resource type="LabelSettings" id="LabelSettings_1pskq"]
-font = ExtResource("3_4cx2n")
-font_size = 48
-
 [sub_resource type="CircleShape2D" id="CircleShape2D_4cx2n"]
 radius = 64.0
 
@@ -99,22 +95,42 @@ animations = [{
 "speed": 15.0
 }]
 
+[sub_resource type="LabelSettings" id="LabelSettings_1pskq"]
+font = ExtResource("3_4cx2n")
+font_size = 48
+
 [node name="Bubble" type="Node2D" node_paths=PackedStringArray("label", "outer", "explosion")]
 script = ExtResource("1_05jx6")
-label = NodePath("Label")
-outer = NodePath("Outer")
-explosion = NodePath("AnimatedSprite2D")
+label = NodePath("InnerNode/Label")
+outer = NodePath("OuterNode/Outer")
+explosion = NodePath("OuterNode/AnimatedSprite2D")
 
-[node name="Outer" type="Sprite2D" parent="."]
+[node name="OuterNode" type="Node2D" parent="."]
+
+[node name="Outer" type="Sprite2D" parent="OuterNode"]
 scale = Vector2(0.25, 0.25)
 texture = ExtResource("1_4a276")
 
-[node name="Inner" type="Sprite2D" parent="."]
+[node name="Area2D" type="Area2D" parent="OuterNode"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="OuterNode/Area2D"]
+shape = SubResource("CircleShape2D_4cx2n")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="OuterNode"]
+visible = false
+scale = Vector2(3, 3)
+sprite_frames = SubResource("SpriteFrames_phga5")
+frame = 10
+frame_progress = 1.0
+
+[node name="InnerNode" type="Node2D" parent="."]
+
+[node name="Inner" type="Sprite2D" parent="InnerNode"]
 modulate = Color(0.109804, 0.623529, 0.843137, 1)
 scale = Vector2(1.2, 1.2)
 texture = ExtResource("3_05jx6")
 
-[node name="Label" type="Label" parent="."]
+[node name="Label" type="Label" parent="InnerNode"]
 offset_left = -13.0
 offset_top = -26.0
 offset_right = 40.0
@@ -122,21 +138,9 @@ offset_bottom = 46.0
 text = "B"
 label_settings = SubResource("LabelSettings_1pskq")
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
+[node name="Sprite2D" type="Sprite2D" parent="InnerNode"]
 visible = false
 texture = ExtResource("5_4cx2n")
 
-[node name="Area2D" type="Area2D" parent="."]
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
-shape = SubResource("CircleShape2D_4cx2n")
-
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
-visible = false
-scale = Vector2(3, 3)
-sprite_frames = SubResource("SpriteFrames_phga5")
-frame = 10
-frame_progress = 1.0
-
-[connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]
-[connection signal="animation_finished" from="AnimatedSprite2D" to="." method="_on_explode_animation_finished"]
+[connection signal="body_entered" from="OuterNode/Area2D" to="." method="_on_area_2d_body_entered"]
+[connection signal="animation_finished" from="OuterNode/AnimatedSprite2D" to="." method="_on_explode_animation_finished"]

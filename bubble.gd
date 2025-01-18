@@ -14,6 +14,12 @@ var _left_border:int
 var _right_border:int
 var _speed:float
 
+var _is_growing:bool = false
+var _growing_time:float = 1
+const BASE_SCALE:float = 1
+const GLOW_SCALE:float = 1.3
+const MAX_SCALE:float = 1.5
+
 func _ready() -> void:
 	tween_floating()
 
@@ -29,6 +35,10 @@ func start_move(is_left:bool, speed:float = 0, left_border:int = 0, right_border
 		_left_border = left_border
 		_right_border = right_border
 		_speed = speed
+		
+func start_grow(grow_time:float):
+	_is_growing = true
+	_growing_time = grow_time
 	
 func _input(event: InputEvent) -> void:
 	if not self.is_visible_in_tree():
@@ -45,9 +55,12 @@ func get_char():
 	return target_char
 	
 func explode():
+	_is_moving= false
 	explosion.frame = 0
 	explosion.visible = true
 	outer.visible = false
+	$InnerNode.visible = false
+	$OuterNode/Area2D/CollisionShape2D.set_deferred("disabled", true)
 	explosion.play()
 
 func tween_floating():
@@ -62,8 +75,6 @@ func tween_floating():
 	
 func _process(delta: float) -> void:
 	if _is_moving:
-	#await get_tree().create_timer(randf()).timeout
-
 		var delta_offset = delta * _speed
 		if _is_towards_left:
 			self.position.x = self.position.x - delta_offset
@@ -74,6 +85,19 @@ func _process(delta: float) -> void:
 			if self.position.x > _right_border:
 				_is_towards_left = !_is_towards_left
 
+	if _is_growing:
+		var delta_scale = (MAX_SCALE - BASE_SCALE)/_growing_time * delta
+		var outerNode = $OuterNode
+		outerNode.scale = Vector2(outerNode.scale.x + delta_scale, outerNode.scale.y+delta_scale)
+		if outerNode.scale.x >= GLOW_SCALE:
+			if int((outerNode.scale.x - GLOW_SCALE) * 100) % 2 == 0:
+				outer.self_modulate = Color.RED
+			else:
+				outer.self_modulate = Color.WHITE
+		if outerNode.scale.x >= MAX_SCALE:
+			_is_growing = false
+			s_bubble_clicked.emit(self, false)
+		
 
 func _on_area_2d_body_entered(body: Node2D) -> void:
 	if body is Inner:

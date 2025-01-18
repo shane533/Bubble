@@ -6,6 +6,7 @@ signal s_ball_in_hole(ball, is_suceed)
 
 var _target_char: String
 var _is_succeed: bool
+var _occupied:Inner
 
 func init(char) -> void:
 	print("INIT HOLE %s" % char)
@@ -18,6 +19,7 @@ func is_succeed() -> bool:
 
 func _on_area_2d_body_entered(body: Node2D) -> void:
 	if body is Inner:
+		_occupied = body
 		print("%s enterred this hole!" % body.get_char())
 		if _target_char == body.get_char():
 			label.self_modulate = Color.GREEN
@@ -34,5 +36,6 @@ func _on_area_2d_body_exited(body: Node2D) -> void:
 		print("%s exit this hole!" % body.get_char())
 		if _target_char == body.get_char():
 			_is_succeed = false
-		label.self_modulate = Color.WHITE
+		if _occupied == body:
+			label.self_modulate = Color.WHITE
 	pass # Replace with function body.
