@@ -126,7 +126,7 @@ func pop_the_bubble(bubble: Bubble) -> void:
 	var obj = inner_ts.instantiate(PackedScene.GEN_EDIT_STATE_DISABLED)
 	obj.init(bubble.get_char())
 	obj.position = bubble.position
-	bubble.queue_free()
+	bubble.explode()
 	levels[Global.current_level].add_child(obj)
 	_balls.append(obj)
 	

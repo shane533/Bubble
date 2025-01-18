@@ -4,6 +4,7 @@ class_name Bubble
 @export var label:Label
 @export var outer: Sprite2D
 @export var target_char: String
+@export var explosion: AnimatedSprite2D
 
 signal s_bubble_clicked(bubble, is_active)
 
@@ -42,6 +43,12 @@ func _input(event: InputEvent) -> void:
 
 func get_char():
 	return target_char
+	
+func explode():
+	explosion.frame = 0
+	explosion.visible = true
+	outer.visible = false
+	explosion.play()
 
 func tween_floating():
 	await get_tree().create_timer(randf()).timeout
@@ -72,3 +79,7 @@ func _on_area_2d_body_entered(body: Node2D) -> void:
 	if body is Inner:
 		print("%s enterred this hole!" % body.get_char())
 		s_bubble_clicked.emit(self, false)
+
+
+func _on_explode_animation_finished() -> void:
+	self.queue_free()

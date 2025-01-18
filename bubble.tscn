@@ -1,10 +1,11 @@
-[gd_scene load_steps=8 format=3 uid="uid://blek7o4gkhsu6"]
+[gd_scene load_steps=21 format=3 uid="uid://blek7o4gkhsu6"]
 
 [ext_resource type="Texture2D" uid="uid://cn5t837mhvfur" path="res://bubble_1.png" id="1_4a276"]
 [ext_resource type="Script" uid="uid://c2y2kdc7yaf74" path="res://bubble.gd" id="1_05jx6"]
 [ext_resource type="FontFile" uid="uid://d3xkhn5qitvno" path="res://kenney_ui-pack/Font/Kenney Future.ttf" id="3_4cx2n"]
 [ext_resource type="Texture2D" uid="uid://e7nc7n4dlquy" path="res://kenney_rolling-ball-assets/PNG/Default/ball_blue_large.png" id="3_05jx6"]
 [ext_resource type="Texture2D" uid="uid://caywa2mrgynkg" path="res://kenney_ui-pack/PNG/Extra/Default/icon_repeat_light.png" id="5_4cx2n"]
+[ext_resource type="Texture2D" uid="uid://b0kf88lxomb2c" path="res://Free Smoke Fx  Pixel 05.png" id="6_1pskq"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_1pskq"]
 font = ExtResource("3_4cx2n")
@@ -13,10 +14,96 @@ font_size = 48
 [sub_resource type="CircleShape2D" id="CircleShape2D_4cx2n"]
 radius = 64.0
 
-[node name="Bubble" type="Node2D" node_paths=PackedStringArray("label", "outer")]
+[sub_resource type="AtlasTexture" id="AtlasTexture_c2d40"]
+atlas = ExtResource("6_1pskq")
+region = Rect2(0, 256, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cd3a8"]
+atlas = ExtResource("6_1pskq")
+region = Rect2(64, 256, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gr152"]
+atlas = ExtResource("6_1pskq")
+region = Rect2(128, 256, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7anfy"]
+atlas = ExtResource("6_1pskq")
+region = Rect2(192, 256, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_o6lp5"]
+atlas = ExtResource("6_1pskq")
+region = Rect2(256, 256, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_te3ye"]
+atlas = ExtResource("6_1pskq")
+region = Rect2(320, 256, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_h682b"]
+atlas = ExtResource("6_1pskq")
+region = Rect2(384, 256, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dsnxv"]
+atlas = ExtResource("6_1pskq")
+region = Rect2(448, 256, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4hkft"]
+atlas = ExtResource("6_1pskq")
+region = Rect2(512, 256, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gev76"]
+atlas = ExtResource("6_1pskq")
+region = Rect2(576, 256, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dhafo"]
+atlas = ExtResource("6_1pskq")
+region = Rect2(640, 256, 64, 64)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_phga5"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_c2d40")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cd3a8")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_gr152")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7anfy")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_o6lp5")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_te3ye")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_h682b")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_dsnxv")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4hkft")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_gev76")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_dhafo")
+}],
+"loop": false,
+"name": &"default",
+"speed": 15.0
+}]
+
+[node name="Bubble" type="Node2D" node_paths=PackedStringArray("label", "outer", "explosion")]
 script = ExtResource("1_05jx6")
 label = NodePath("Label")
 outer = NodePath("Outer")
+explosion = NodePath("AnimatedSprite2D")
 
 [node name="Outer" type="Sprite2D" parent="."]
 scale = Vector2(0.25, 0.25)
@@ -44,4 +131,12 @@ texture = ExtResource("5_4cx2n")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
 shape = SubResource("CircleShape2D_4cx2n")
 
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+visible = false
+scale = Vector2(3, 3)
+sprite_frames = SubResource("SpriteFrames_phga5")
+frame = 10
+frame_progress = 1.0
+
 [connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]
+[connection signal="animation_finished" from="AnimatedSprite2D" to="." method="_on_explode_animation_finished"]
