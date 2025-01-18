@@ -1,13 +1,17 @@
-[gd_scene load_steps=6 format=3 uid="uid://blek7o4gkhsu6"]
+[gd_scene load_steps=8 format=3 uid="uid://blek7o4gkhsu6"]
 
 [ext_resource type="Texture2D" uid="uid://cn5t837mhvfur" path="res://bubble_1.png" id="1_4a276"]
 [ext_resource type="Script" uid="uid://c2y2kdc7yaf74" path="res://bubble.gd" id="1_05jx6"]
 [ext_resource type="FontFile" uid="uid://d3xkhn5qitvno" path="res://kenney_ui-pack/Font/Kenney Future.ttf" id="3_4cx2n"]
 [ext_resource type="Texture2D" uid="uid://e7nc7n4dlquy" path="res://kenney_rolling-ball-assets/PNG/Default/ball_blue_large.png" id="3_05jx6"]
+[ext_resource type="Texture2D" uid="uid://caywa2mrgynkg" path="res://kenney_ui-pack/PNG/Extra/Default/icon_repeat_light.png" id="5_4cx2n"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_1pskq"]
 font = ExtResource("3_4cx2n")
 font_size = 48
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_4cx2n"]
+radius = 64.0
 
 [node name="Bubble" type="Node2D" node_paths=PackedStringArray("label", "outer")]
 script = ExtResource("1_05jx6")
@@ -30,3 +34,14 @@ offset_right = 40.0
 offset_bottom = 46.0
 text = "B"
 label_settings = SubResource("LabelSettings_1pskq")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+visible = false
+texture = ExtResource("5_4cx2n")
+
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("CircleShape2D_4cx2n")
+
+[connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]

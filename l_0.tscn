@@ -1,0 +1,105 @@
+[gd_scene load_steps=10 format=3 uid="uid://cg0ayl6mee26c"]
+
+[ext_resource type="Script" uid="uid://2vwwca8q6umr" path="res://level.gd" id="1_cmrpg"]
+[ext_resource type="Texture2D" uid="uid://c6itk2224p6wy" path="res://kenney_rolling-ball-assets/PNG/Default/background_brown.png" id="2_4njkk"]
+[ext_resource type="PackedScene" uid="uid://bgf1vqi8s2wu5" path="res://bottom_hole.tscn" id="3_r7sb2"]
+[ext_resource type="PackedScene" uid="uid://blek7o4gkhsu6" path="res://bubble.tscn" id="4_kq6xi"]
+[ext_resource type="FontFile" uid="uid://d3xkhn5qitvno" path="res://kenney_ui-pack/Font/Kenney Future.ttf" id="5_ga0gk"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_h2yge"]
+size = Vector2(1280.6, 978.427)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_lquwl"]
+size = Vector2(1575, 50)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_7mycd"]
+size = Vector2(80.75, 998.5)
+
+[sub_resource type="LabelSettings" id="LabelSettings_272bh"]
+font = ExtResource("5_ga0gk")
+font_size = 48
+
+[node name="L0" type="Area2D" node_paths=PackedStringArray("bubbles", "holes")]
+gravity_space_override = 3
+script = ExtResource("1_cmrpg")
+bubbles = [NodePath("Bubbles/Bubble"), NodePath("Bubbles/Bubble2"), NodePath("Bubbles/Bubble3"), NodePath("Bubbles/Bubble4"), NodePath("Bubbles/Bubble5"), NodePath("Bubbles/Bubble6")]
+holes = [NodePath("Bottom/OneBottomHole"), NodePath("Bottom/OneBottomHole2"), NodePath("Bottom/OneBottomHole3"), NodePath("Bottom/OneBottomHole4"), NodePath("Bottom/OneBottomHole5"), NodePath("Bottom/OneBottomHole6")]
+
+[node name="TextureRect" type="TextureRect" parent="."]
+offset_left = -2.0
+offset_top = -346.0
+offset_right = 1281.0
+offset_bottom = 947.0
+texture = ExtResource("2_4njkk")
+stretch_mode = 1
+metadata/_edit_use_anchors_ = true
+
+[node name="Bottom" type="Node2D" parent="."]
+position = Vector2(0, 500)
+
+[node name="OneBottomHole" parent="Bottom" instance=ExtResource("3_r7sb2")]
+position = Vector2(50, 0)
+
+[node name="OneBottomHole2" parent="Bottom" instance=ExtResource("3_r7sb2")]
+position = Vector2(250, 0)
+
+[node name="OneBottomHole3" parent="Bottom" instance=ExtResource("3_r7sb2")]
+position = Vector2(450, 0)
+
+[node name="OneBottomHole4" parent="Bottom" instance=ExtResource("3_r7sb2")]
+position = Vector2(650, 0)
+
+[node name="OneBottomHole5" parent="Bottom" instance=ExtResource("3_r7sb2")]
+position = Vector2(850, 0)
+
+[node name="OneBottomHole6" parent="Bottom" instance=ExtResource("3_r7sb2")]
+position = Vector2(1050, 0)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(640.7, 491)
+shape = SubResource("RectangleShape2D_h2yge")
+debug_color = Color(0.800683, 0.194762, 0.905107, 0.42)
+
+[node name="Border" type="Area2D" parent="."]
+position = Vector2(453, 792)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Border"]
+position = Vector2(195.5, 183)
+shape = SubResource("RectangleShape2D_lquwl")
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="Border"]
+position = Vector2(-633, -291.75)
+shape = SubResource("RectangleShape2D_7mycd")
+
+[node name="CollisionShape2D3" type="CollisionShape2D" parent="Border"]
+position = Vector2(1024, -290)
+shape = SubResource("RectangleShape2D_7mycd")
+
+[node name="Bubbles" type="Node2D" parent="."]
+
+[node name="Bubble" parent="Bubbles" instance=ExtResource("4_kq6xi")]
+position = Vector2(129, 174)
+
+[node name="Bubble2" parent="Bubbles" instance=ExtResource("4_kq6xi")]
+position = Vector2(315, 120)
+
+[node name="Bubble3" parent="Bubbles" instance=ExtResource("4_kq6xi")]
+position = Vector2(536, 189)
+
+[node name="Bubble4" parent="Bubbles" instance=ExtResource("4_kq6xi")]
+position = Vector2(737, 152)
+
+[node name="Bubble5" parent="Bubbles" instance=ExtResource("4_kq6xi")]
+position = Vector2(944, 196)
+
+[node name="Bubble6" parent="Bubbles" instance=ExtResource("4_kq6xi")]
+position = Vector2(1153, 157)
+
+[node name="Label" type="Label" parent="."]
+offset_left = 47.0
+offset_top = -85.0
+offset_right = 588.0
+offset_bottom = -31.0
+text = "Click to pop the"
+label_settings = SubResource("LabelSettings_272bh")
+metadata/_edit_use_anchors_ = true
