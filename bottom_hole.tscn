@@ -27,7 +27,7 @@ scale = Vector2(0.45, 1)
 
 [node name="CollisionShape2D" type="CollisionPolygon2D" parent="Triangle"]
 scale = Vector2(12.8, 12.8)
-polygon = PackedVector2Array(1.25, 0, 9.84375, 8.67187, 9.84375, 9.84375, 0.078125, 9.92187, 0, 0)
+polygon = PackedVector2Array(1.73611, 0.546875, 9.84375, 8.67187, 9.84375, 9.84375, 0.078125, 9.92187, 0, 0)
 
 [node name="Sprite2D" type="Sprite2D" parent="Triangle"]
 texture = ExtResource("2_ce0xg")
@@ -40,7 +40,7 @@ scale = Vector2(0.45, -1)
 
 [node name="CollisionShape2D" type="CollisionPolygon2D" parent="Triangle2"]
 scale = Vector2(12.8, 12.8)
-polygon = PackedVector2Array(1.25, 0, 9.84375, 8.67187, 9.84375, 9.84375, 0.078125, 9.92187, 0, 0)
+polygon = PackedVector2Array(1.5625, 0.546873, 9.84375, 8.67187, 9.84375, 9.84375, 0.078125, 9.92187, 0, 0)
 
 [node name="Sprite2D" type="Sprite2D" parent="Triangle2"]
 texture = ExtResource("2_ce0xg")

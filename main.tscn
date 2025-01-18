@@ -1,4 +1,4 @@
-[gd_scene load_steps=34 format=3 uid="uid://bpofcs1mxq03r"]
+[gd_scene load_steps=35 format=3 uid="uid://bpofcs1mxq03r"]
 
 [ext_resource type="Script" uid="uid://d04wcpr3pxl4o" path="res://main.gd" id="1_ycdy4"]
 [ext_resource type="PackedScene" uid="uid://blek7o4gkhsu6" path="res://bubble.tscn" id="2_0xm2m"]
@@ -21,6 +21,7 @@
 [ext_resource type="Resource" uid="uid://dain2kmjwn5dw" path="res://level_config/level_7.tres" id="17_cegan"]
 [ext_resource type="Resource" uid="uid://dwpcfc1wicgdb" path="res://level_config/level_8.tres" id="18_82xsv"]
 [ext_resource type="Resource" uid="uid://b1yjb0gcm1hai" path="res://level_config/level_9.tres" id="19_getpj"]
+[ext_resource type="Resource" uid="uid://d1c5h4qrcyvy5" path="res://level_config/level_10.tres" id="20_d13ii"]
 [ext_resource type="FontFile" uid="uid://cx7krx32b250n" path="res://kenney_ui-pack/Font/kenney_kenney-fonts/Kenney Mini Square.ttf" id="22_ryguw"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_getpj"]
@@ -29,12 +30,6 @@ font_size = 3200
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_h2yge"]
 size = Vector2(1280.6, 978.427)
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_lquwl"]
-size = Vector2(1575, 50)
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_7mycd"]
-size = Vector2(80.75, 998.5)
 
 [sub_resource type="LabelSettings" id="LabelSettings_272bh"]
 font = ExtResource("3_1bvp3")
@@ -53,6 +48,12 @@ font_size = 64
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_5vw27"]
 size = Vector2(234.5, 22)
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ryguw"]
+size = Vector2(104, 1001)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_d13ii"]
+size = Vector2(1479, 57)
+
 [sub_resource type="LabelSettings" id="LabelSettings_7mycd"]
 font = ExtResource("3_1bvp3")
 font_size = 32
@@ -62,7 +63,7 @@ font = ExtResource("22_ryguw")
 
 [node name="Root" type="Node2D" node_paths=PackedStringArray("levels", "nextBubble", "levelLabel", "limitLabel", "hintLabel", "finNode")]
 script = ExtResource("1_ycdy4")
-levels = [NodePath("L0"), NodePath("L1"), NodePath("L2"), NodePath("L3"), NodePath("L4"), NodePath("L5"), NodePath("L6"), NodePath("L7"), NodePath("L8"), NodePath("L9")]
+levels = [NodePath("L0"), NodePath("L1"), NodePath("L2"), NodePath("L3"), NodePath("L4"), NodePath("L5"), NodePath("L6"), NodePath("L7"), NodePath("L8"), NodePath("L9"), NodePath("L10")]
 nextBubble = NodePath("TopRightUI/NextButton")
 levelLabel = NodePath("TopRightUI/LevelLabel")
 limitLabel = NodePath("TopRightUI/LimitLabel")
@@ -80,6 +81,7 @@ text = "Click to pop the"
 label_settings = SubResource("LabelSettings_getpj")
 
 [node name="L0" type="Area2D" parent="." node_paths=PackedStringArray("bubbles", "holes")]
+visible = false
 position = Vector2(0, 250)
 gravity_space_override = 3
 script = ExtResource("2_272bh")
@@ -120,21 +122,6 @@ position = Vector2(1050, 0)
 position = Vector2(640.7, 491)
 shape = SubResource("RectangleShape2D_h2yge")
 debug_color = Color(0.800683, 0.194762, 0.905107, 0.42)
-
-[node name="Border" type="Area2D" parent="L0"]
-position = Vector2(453, 792)
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="L0/Border"]
-position = Vector2(195.5, 183)
-shape = SubResource("RectangleShape2D_lquwl")
-
-[node name="CollisionShape2D2" type="CollisionShape2D" parent="L0/Border"]
-position = Vector2(-633, -291.75)
-shape = SubResource("RectangleShape2D_7mycd")
-
-[node name="CollisionShape2D3" type="CollisionShape2D" parent="L0/Border"]
-position = Vector2(1024, -290)
-shape = SubResource("RectangleShape2D_7mycd")
 
 [node name="Bubbles" type="Node2D" parent="L0"]
 
@@ -206,21 +193,6 @@ position = Vector2(640.7, 491)
 shape = SubResource("RectangleShape2D_h2yge")
 debug_color = Color(0.800683, 0.194762, 0.905107, 0.42)
 
-[node name="Border" type="Area2D" parent="L1"]
-position = Vector2(453, 792)
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="L1/Border"]
-position = Vector2(195.5, 183)
-shape = SubResource("RectangleShape2D_lquwl")
-
-[node name="CollisionShape2D2" type="CollisionShape2D" parent="L1/Border"]
-position = Vector2(-633, -291.75)
-shape = SubResource("RectangleShape2D_7mycd")
-
-[node name="CollisionShape2D3" type="CollisionShape2D" parent="L1/Border"]
-position = Vector2(1024, -290)
-shape = SubResource("RectangleShape2D_7mycd")
-
 [node name="Bubbles" type="Node2D" parent="L1"]
 
 [node name="Bubble" parent="L1/Bubbles" instance=ExtResource("2_0xm2m")]
@@ -278,7 +250,7 @@ scale = Vector2(0.45, 1)
 
 [node name="CollisionShape2D" type="CollisionPolygon2D" parent="L2/Bottom/OneBottomHole/Triangle"]
 scale = Vector2(12.8, 12.8)
-polygon = PackedVector2Array(1.25, 0, 9.84375, 8.67187, 9.84375, 9.84375, 0.078125, 9.92187, 0, 0)
+polygon = PackedVector2Array(1.04167, 0.15625, 9.84375, 8.67187, 9.84375, 9.84375, 0.078125, 9.92187, 0, 0)
 
 [node name="Sprite2D" type="Sprite2D" parent="L2/Bottom/OneBottomHole/Triangle"]
 texture = ExtResource("5_lquwl")
@@ -291,7 +263,7 @@ scale = Vector2(0.45, -1)
 
 [node name="CollisionShape2D" type="CollisionPolygon2D" parent="L2/Bottom/OneBottomHole/Triangle2"]
 scale = Vector2(12.8, 12.8)
-polygon = PackedVector2Array(1.25, 0, 9.84375, 8.67187, 9.84375, 9.84375, 0.078125, 9.92187, 0, 0)
+polygon = PackedVector2Array(1.21528, 0.234375, 9.84375, 8.67187, 9.84375, 9.84375, 0.078125, 9.92187, 0, 0)
 
 [node name="Sprite2D" type="Sprite2D" parent="L2/Bottom/OneBottomHole/Triangle2"]
 texture = ExtResource("5_lquwl")
@@ -463,7 +435,7 @@ scale = Vector2(0.45, 1)
 
 [node name="CollisionShape2D" type="CollisionPolygon2D" parent="L2/Bottom/OneBottomHole4/Triangle"]
 scale = Vector2(12.8, 12.8)
-polygon = PackedVector2Array(1.25, 0, 9.84375, 8.67187, 9.84375, 9.84375, 0.078125, 9.92187, 0, 0)
+polygon = PackedVector2Array(1.04167, 0.234375, 9.84375, 8.67187, 9.84375, 9.84375, 0.078125, 9.92187, 0, 0)
 
 [node name="Sprite2D" type="Sprite2D" parent="L2/Bottom/OneBottomHole4/Triangle"]
 texture = ExtResource("5_lquwl")
@@ -476,7 +448,7 @@ scale = Vector2(0.45, -1)
 
 [node name="CollisionShape2D" type="CollisionPolygon2D" parent="L2/Bottom/OneBottomHole4/Triangle2"]
 scale = Vector2(12.8, 12.8)
-polygon = PackedVector2Array(1.25, 0, 9.84375, 8.67187, 9.84375, 9.84375, 0.078125, 9.92187, 0, 0)
+polygon = PackedVector2Array(1.38889, 0.234373, 9.84375, 8.67187, 9.84375, 9.84375, 0.078125, 9.92187, 0, 0)
 
 [node name="Sprite2D" type="Sprite2D" parent="L2/Bottom/OneBottomHole4/Triangle2"]
 texture = ExtResource("5_lquwl")
@@ -643,21 +615,6 @@ position = Vector2(640.7, 491)
 shape = SubResource("RectangleShape2D_h2yge")
 debug_color = Color(0.800683, 0.194762, 0.905107, 0.42)
 
-[node name="Border" type="Area2D" parent="L2"]
-position = Vector2(453, 792)
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="L2/Border"]
-position = Vector2(195.5, 183)
-shape = SubResource("RectangleShape2D_lquwl")
-
-[node name="CollisionShape2D2" type="CollisionShape2D" parent="L2/Border"]
-position = Vector2(-633, -291.75)
-shape = SubResource("RectangleShape2D_7mycd")
-
-[node name="CollisionShape2D3" type="CollisionShape2D" parent="L2/Border"]
-position = Vector2(1024, -290)
-shape = SubResource("RectangleShape2D_7mycd")
-
 [node name="Bubbles" type="Node2D" parent="L2"]
 
 [node name="Bubble" parent="L2/Bubbles" instance=ExtResource("2_0xm2m")]
@@ -716,7 +673,7 @@ scale = Vector2(0.35, 1)
 
 [node name="CollisionShape2D" type="CollisionPolygon2D" parent="L3/Bottom/OneBottomHole/Triangle"]
 scale = Vector2(12.8, 12.8)
-polygon = PackedVector2Array(1.25, 0, 9.84375, 8.67187, 9.84375, 9.84375, 0.078125, 9.92187, 0, 0)
+polygon = PackedVector2Array(1.5625, 0.390623, 9.84375, 8.67187, 9.84375, 9.84375, 0.078125, 9.92187, 0, 0)
 
 [node name="Sprite2D" type="Sprite2D" parent="L3/Bottom/OneBottomHole/Triangle"]
 texture = ExtResource("5_lquwl")
@@ -729,7 +686,7 @@ scale = Vector2(0.35, -1)
 
 [node name="CollisionShape2D" type="CollisionPolygon2D" parent="L3/Bottom/OneBottomHole/Triangle2"]
 scale = Vector2(12.8, 12.8)
-polygon = PackedVector2Array(1.25, 0, 9.84375, 8.67187, 9.84375, 9.84375, 0.078125, 9.92187, 0, 0)
+polygon = PackedVector2Array(1.56251, 0.468746, 9.84375, 8.67187, 9.84375, 9.84375, 0.078125, 9.92187, 0, 0)
 
 [node name="Sprite2D" type="Sprite2D" parent="L3/Bottom/OneBottomHole/Triangle2"]
 texture = ExtResource("5_lquwl")
@@ -902,7 +859,7 @@ scale = Vector2(0.35, 1)
 
 [node name="CollisionShape2D" type="CollisionPolygon2D" parent="L3/Bottom/OneBottomHole4/Triangle"]
 scale = Vector2(12.8, 12.8)
-polygon = PackedVector2Array(1.25, 0, 9.84375, 8.67187, 9.84375, 9.84375, 0.078125, 9.92187, 0, 0)
+polygon = PackedVector2Array(1.5625, 0.3125, 9.84375, 8.67187, 9.84375, 9.84375, 0.078125, 9.92187, 0, 0)
 
 [node name="Sprite2D" type="Sprite2D" parent="L3/Bottom/OneBottomHole4/Triangle"]
 texture = ExtResource("5_lquwl")
@@ -915,7 +872,7 @@ scale = Vector2(0.35, -1)
 
 [node name="CollisionShape2D" type="CollisionPolygon2D" parent="L3/Bottom/OneBottomHole4/Triangle2"]
 scale = Vector2(12.8, 12.8)
-polygon = PackedVector2Array(1.25, 0, 9.84375, 8.67187, 9.84375, 9.84375, 0.078125, 9.92187, 0, 0)
+polygon = PackedVector2Array(1.78571, 0.468746, 9.84375, 8.67187, 9.84375, 9.84375, 0.078125, 9.92187, 0, 0)
 
 [node name="Sprite2D" type="Sprite2D" parent="L3/Bottom/OneBottomHole4/Triangle2"]
 texture = ExtResource("5_lquwl")
@@ -1082,21 +1039,6 @@ position = Vector2(640.7, 491)
 shape = SubResource("RectangleShape2D_h2yge")
 debug_color = Color(0.800683, 0.194762, 0.905107, 0.42)
 
-[node name="Border" type="Area2D" parent="L3"]
-position = Vector2(453, 792)
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="L3/Border"]
-position = Vector2(195.5, 183)
-shape = SubResource("RectangleShape2D_lquwl")
-
-[node name="CollisionShape2D2" type="CollisionShape2D" parent="L3/Border"]
-position = Vector2(-633, -291.75)
-shape = SubResource("RectangleShape2D_7mycd")
-
-[node name="CollisionShape2D3" type="CollisionShape2D" parent="L3/Border"]
-position = Vector2(1024, -290)
-shape = SubResource("RectangleShape2D_7mycd")
-
 [node name="Bubbles" type="Node2D" parent="L3"]
 
 [node name="Bubble" parent="L3/Bubbles" instance=ExtResource("2_0xm2m")]
@@ -1155,7 +1097,7 @@ scale = Vector2(0.35, 1)
 
 [node name="CollisionShape2D" type="CollisionPolygon2D" parent="L4/Bottom/OneBottomHole/Triangle"]
 scale = Vector2(12.8, 12.8)
-polygon = PackedVector2Array(1.25, 0, 9.84375, 8.67187, 9.84375, 9.84375, 0.078125, 9.92187, 0, 0)
+polygon = PackedVector2Array(1.5625, 0.390625, 9.84375, 8.67187, 9.84375, 9.84375, 0.078125, 9.92187, 0, 0)
 
 [node name="Sprite2D" type="Sprite2D" parent="L4/Bottom/OneBottomHole/Triangle"]
 texture = ExtResource("5_lquwl")
@@ -1168,7 +1110,7 @@ scale = Vector2(0.35, -1)
 
 [node name="CollisionShape2D" type="CollisionPolygon2D" parent="L4/Bottom/OneBottomHole/Triangle2"]
 scale = Vector2(12.8, 12.8)
-polygon = PackedVector2Array(1.25, 0, 9.84375, 8.67187, 9.84375, 9.84375, 0.078125, 9.92187, 0, 0)
+polygon = PackedVector2Array(1.78572, 0.546871, 9.84375, 8.67187, 9.84375, 9.84375, 0.078125, 9.92187, 0, 0)
 
 [node name="Sprite2D" type="Sprite2D" parent="L4/Bottom/OneBottomHole/Triangle2"]
 texture = ExtResource("5_lquwl")
@@ -1345,7 +1287,7 @@ scale = Vector2(0.35, 1)
 
 [node name="CollisionShape2D" type="CollisionPolygon2D" parent="L4/Bottom/OneBottomHole4/Triangle"]
 scale = Vector2(12.8, 12.8)
-polygon = PackedVector2Array(1.25, 0, 9.84375, 8.67187, 9.84375, 9.84375, 0.078125, 9.92187, 0, 0)
+polygon = PackedVector2Array(1.78571, 0.546875, 9.84375, 8.67187, 9.84375, 9.84375, 0.078125, 9.92187, 0, 0)
 
 [node name="Sprite2D" type="Sprite2D" parent="L4/Bottom/OneBottomHole4/Triangle"]
 texture = ExtResource("5_lquwl")
@@ -1358,7 +1300,7 @@ scale = Vector2(0.35, -1)
 
 [node name="CollisionShape2D" type="CollisionPolygon2D" parent="L4/Bottom/OneBottomHole4/Triangle2"]
 scale = Vector2(12.8, 12.8)
-polygon = PackedVector2Array(1.25, 0, 9.84375, 8.67187, 9.84375, 9.84375, 0.078125, 9.92187, 0, 0)
+polygon = PackedVector2Array(1.78572, 0.546875, 9.84375, 8.67187, 9.84375, 9.84375, 0.078125, 9.92187, 0, 0)
 
 [node name="Sprite2D" type="Sprite2D" parent="L4/Bottom/OneBottomHole4/Triangle2"]
 texture = ExtResource("5_lquwl")
@@ -1405,7 +1347,7 @@ scale = Vector2(0.35, 1)
 
 [node name="CollisionShape2D" type="CollisionPolygon2D" parent="L4/Bottom/OneBottomHole5/Triangle"]
 scale = Vector2(12.8, 12.8)
-polygon = PackedVector2Array(1.25, 0, 9.84375, 8.67187, 9.84375, 9.84375, 0.078125, 9.92187, 0, 0)
+polygon = PackedVector2Array(1.78571, 0.46875, 9.84375, 8.67187, 9.84375, 9.84375, 0.078125, 9.92187, 0, 0)
 
 [node name="Sprite2D" type="Sprite2D" parent="L4/Bottom/OneBottomHole5/Triangle"]
 texture = ExtResource("5_lquwl")
@@ -1418,7 +1360,7 @@ scale = Vector2(0.35, -1)
 
 [node name="CollisionShape2D" type="CollisionPolygon2D" parent="L4/Bottom/OneBottomHole5/Triangle2"]
 scale = Vector2(12.8, 12.8)
-polygon = PackedVector2Array(1.25, 0, 9.84375, 8.67187, 9.84375, 9.84375, 0.078125, 9.92187, 0, 0)
+polygon = PackedVector2Array(1.78572, 0.390625, 9.84375, 8.67187, 9.84375, 9.84375, 0.078125, 9.92187, 0, 0)
 
 [node name="Sprite2D" type="Sprite2D" parent="L4/Bottom/OneBottomHole5/Triangle2"]
 texture = ExtResource("5_lquwl")
@@ -1524,21 +1466,6 @@ position = Vector2(640.7, 491)
 shape = SubResource("RectangleShape2D_h2yge")
 debug_color = Color(0.800683, 0.194762, 0.905107, 0.42)
 
-[node name="Border" type="Area2D" parent="L4"]
-position = Vector2(453, 792)
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="L4/Border"]
-position = Vector2(195.5, 183)
-shape = SubResource("RectangleShape2D_lquwl")
-
-[node name="CollisionShape2D2" type="CollisionShape2D" parent="L4/Border"]
-position = Vector2(-633, -291.75)
-shape = SubResource("RectangleShape2D_7mycd")
-
-[node name="CollisionShape2D3" type="CollisionShape2D" parent="L4/Border"]
-position = Vector2(1024, -290)
-shape = SubResource("RectangleShape2D_7mycd")
-
 [node name="Bubbles" type="Node2D" parent="L4"]
 
 [node name="Bubble" parent="L4/Bubbles" instance=ExtResource("2_0xm2m")]
@@ -1597,7 +1524,7 @@ scale = Vector2(1, 0.5)
 
 [node name="CollisionShape2D" type="CollisionPolygon2D" parent="L5/Bottom/OneBottomHole/Triangle"]
 scale = Vector2(12.8, 12.8)
-polygon = PackedVector2Array(1.25, 0, 9.84375, 8.67187, 9.84375, 9.84375, 0.078125, 9.92187, 0, 0)
+polygon = PackedVector2Array(1.48438, 0.46875, 9.84375, 8.67187, 9.84375, 9.84375, 0.078125, 9.92187, 0, 0)
 
 [node name="Sprite2D" type="Sprite2D" parent="L5/Bottom/OneBottomHole/Triangle"]
 texture = ExtResource("5_lquwl")
@@ -1610,7 +1537,7 @@ scale = Vector2(1, -0.5)
 
 [node name="CollisionShape2D" type="CollisionPolygon2D" parent="L5/Bottom/OneBottomHole/Triangle2"]
 scale = Vector2(12.8, 12.8)
-polygon = PackedVector2Array(1.25, 0, 9.84375, 8.67187, 9.84375, 9.84375, 0.078125, 9.92187, 0, 0)
+polygon = PackedVector2Array(1.48438, 0.624992, 9.84375, 8.67187, 9.84375, 9.84375, 0.078125, 9.92187, 0, 0)
 
 [node name="Sprite2D" type="Sprite2D" parent="L5/Bottom/OneBottomHole/Triangle2"]
 texture = ExtResource("5_lquwl")
@@ -1785,7 +1712,7 @@ scale = Vector2(1, 0.5)
 
 [node name="CollisionShape2D" type="CollisionPolygon2D" parent="L5/Bottom/OneBottomHole4/Triangle"]
 scale = Vector2(12.8, 12.8)
-polygon = PackedVector2Array(1.25, 0, 9.84375, 8.67187, 9.84375, 9.84375, 0.078125, 9.92187, 0, 0)
+polygon = PackedVector2Array(1.64062, 0.46875, 9.84375, 8.67187, 9.84375, 9.84375, 0.078125, 9.92187, 0, 0)
 
 [node name="Sprite2D" type="Sprite2D" parent="L5/Bottom/OneBottomHole4/Triangle"]
 texture = ExtResource("5_lquwl")
@@ -1798,7 +1725,7 @@ scale = Vector2(1, -0.5)
 
 [node name="CollisionShape2D" type="CollisionPolygon2D" parent="L5/Bottom/OneBottomHole4/Triangle2"]
 scale = Vector2(12.8, 12.8)
-polygon = PackedVector2Array(1.25, 0, 9.84375, 8.67187, 9.84375, 9.84375, 0.078125, 9.92187, 0, 0)
+polygon = PackedVector2Array(1.71875, 0.468735, 9.84375, 8.67187, 9.84375, 9.84375, 0.078125, 9.92187, 0, 0)
 
 [node name="Sprite2D" type="Sprite2D" parent="L5/Bottom/OneBottomHole4/Triangle2"]
 texture = ExtResource("5_lquwl")
@@ -1967,21 +1894,6 @@ position = Vector2(640.7, 491)
 shape = SubResource("RectangleShape2D_h2yge")
 debug_color = Color(0.800683, 0.194762, 0.905107, 0.42)
 
-[node name="Border" type="Area2D" parent="L5"]
-position = Vector2(453, 792)
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="L5/Border"]
-position = Vector2(195.5, 183)
-shape = SubResource("RectangleShape2D_lquwl")
-
-[node name="CollisionShape2D2" type="CollisionShape2D" parent="L5/Border"]
-position = Vector2(-633, -291.75)
-shape = SubResource("RectangleShape2D_7mycd")
-
-[node name="CollisionShape2D3" type="CollisionShape2D" parent="L5/Border"]
-position = Vector2(1024, -290)
-shape = SubResource("RectangleShape2D_7mycd")
-
 [node name="Bubbles" type="Node2D" parent="L5"]
 
 [node name="Bubble" parent="L5/Bubbles" instance=ExtResource("2_0xm2m")]
@@ -2040,7 +1952,7 @@ scale = Vector2(1, 0.5)
 
 [node name="CollisionShape2D" type="CollisionPolygon2D" parent="L6/Bottom/OneBottomHole/Triangle"]
 scale = Vector2(12.8, 12.8)
-polygon = PackedVector2Array(1.25, 0, 9.84375, 8.67187, 9.84375, 9.84375, 0.078125, 9.92187, 0, 0)
+polygon = PackedVector2Array(1.95313, 0.625, 9.84375, 8.67187, 9.84375, 9.84375, 0.078125, 9.92187, 0, 0)
 
 [node name="Sprite2D" type="Sprite2D" parent="L6/Bottom/OneBottomHole/Triangle"]
 texture = ExtResource("5_lquwl")
@@ -2053,7 +1965,7 @@ scale = Vector2(1, -0.5)
 
 [node name="CollisionShape2D" type="CollisionPolygon2D" parent="L6/Bottom/OneBottomHole/Triangle2"]
 scale = Vector2(12.8, 12.8)
-polygon = PackedVector2Array(1.25, 0, 9.84375, 8.67187, 9.84375, 9.84375, 0.078125, 9.92187, 0, 0)
+polygon = PackedVector2Array(1.95313, 0.624992, 9.84375, 8.67187, 9.84375, 9.84375, 0.078125, 9.92187, 0, 0)
 
 [node name="Sprite2D" type="Sprite2D" parent="L6/Bottom/OneBottomHole/Triangle2"]
 texture = ExtResource("5_lquwl")
@@ -2228,7 +2140,7 @@ scale = Vector2(1, 0.5)
 
 [node name="CollisionShape2D" type="CollisionPolygon2D" parent="L6/Bottom/OneBottomHole4/Triangle"]
 scale = Vector2(12.8, 12.8)
-polygon = PackedVector2Array(1.25, 0, 9.84375, 8.67187, 9.84375, 9.84375, 0.078125, 9.92187, 0, 0)
+polygon = PackedVector2Array(1.79687, 0.625, 9.84375, 8.67187, 9.84375, 9.84375, 0.078125, 9.92187, 0, 0)
 
 [node name="Sprite2D" type="Sprite2D" parent="L6/Bottom/OneBottomHole4/Triangle"]
 texture = ExtResource("5_lquwl")
@@ -2241,7 +2153,7 @@ scale = Vector2(1, -0.5)
 
 [node name="CollisionShape2D" type="CollisionPolygon2D" parent="L6/Bottom/OneBottomHole4/Triangle2"]
 scale = Vector2(12.8, 12.8)
-polygon = PackedVector2Array(1.25, 0, 9.84375, 8.67187, 9.84375, 9.84375, 0.078125, 9.92187, 0, 0)
+polygon = PackedVector2Array(2.03125, 0.781235, 9.84375, 8.67187, 9.84375, 9.84375, 0.078125, 9.92187, 0, 0)
 
 [node name="Sprite2D" type="Sprite2D" parent="L6/Bottom/OneBottomHole4/Triangle2"]
 texture = ExtResource("5_lquwl")
@@ -2410,21 +2322,6 @@ position = Vector2(640.7, 491)
 shape = SubResource("RectangleShape2D_h2yge")
 debug_color = Color(0.800683, 0.194762, 0.905107, 0.42)
 
-[node name="Border" type="Area2D" parent="L6"]
-position = Vector2(453, 792)
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="L6/Border"]
-position = Vector2(195.5, 183)
-shape = SubResource("RectangleShape2D_lquwl")
-
-[node name="CollisionShape2D2" type="CollisionShape2D" parent="L6/Border"]
-position = Vector2(-633, -291.75)
-shape = SubResource("RectangleShape2D_7mycd")
-
-[node name="CollisionShape2D3" type="CollisionShape2D" parent="L6/Border"]
-position = Vector2(1024, -290)
-shape = SubResource("RectangleShape2D_7mycd")
-
 [node name="Bubbles" type="Node2D" parent="L6"]
 
 [node name="BubbleB" parent="L6/Bubbles" instance=ExtResource("2_0xm2m")]
@@ -2483,7 +2380,7 @@ scale = Vector2(0.3, 1)
 
 [node name="CollisionShape2D" type="CollisionPolygon2D" parent="L7/Bottom/OneBottomHole/Triangle"]
 scale = Vector2(12.8, 12.8)
-polygon = PackedVector2Array(1.25, 0, 9.84375, 8.67187, 9.84375, 9.84375, 0.078125, 9.92187, 0, 0)
+polygon = PackedVector2Array(1.5625, 0.3125, 9.84375, 8.67187, 9.84375, 9.84375, 0.078125, 9.92187, 0, 0)
 
 [node name="Sprite2D" type="Sprite2D" parent="L7/Bottom/OneBottomHole/Triangle"]
 texture = ExtResource("5_lquwl")
@@ -2496,7 +2393,7 @@ scale = Vector2(0.35, -1)
 
 [node name="CollisionShape2D" type="CollisionPolygon2D" parent="L7/Bottom/OneBottomHole/Triangle2"]
 scale = Vector2(12.8, 12.8)
-polygon = PackedVector2Array(1.25, 0, 9.84375, 8.67187, 9.84375, 9.84375, 0.078125, 9.92187, 0, 0)
+polygon = PackedVector2Array(1.78572, 0.390621, 9.84375, 8.67187, 9.84375, 9.84375, 0.078125, 9.92187, 0, 0)
 
 [node name="Sprite2D" type="Sprite2D" parent="L7/Bottom/OneBottomHole/Triangle2"]
 texture = ExtResource("5_lquwl")
@@ -2669,7 +2566,7 @@ scale = Vector2(0.3, 1)
 
 [node name="CollisionShape2D" type="CollisionPolygon2D" parent="L7/Bottom/OneBottomHole4/Triangle"]
 scale = Vector2(12.8, 12.8)
-polygon = PackedVector2Array(1.25, 0, 9.84375, 8.67187, 9.84375, 9.84375, 0.078125, 9.92187, 0, 0)
+polygon = PackedVector2Array(1.82291, 0.546875, 9.84375, 8.67187, 9.84375, 9.84375, 0.078125, 9.92187, 0, 0)
 
 [node name="Sprite2D" type="Sprite2D" parent="L7/Bottom/OneBottomHole4/Triangle"]
 texture = ExtResource("5_lquwl")
@@ -2682,7 +2579,7 @@ scale = Vector2(0.3, -1)
 
 [node name="CollisionShape2D" type="CollisionPolygon2D" parent="L7/Bottom/OneBottomHole4/Triangle2"]
 scale = Vector2(12.8, 12.8)
-polygon = PackedVector2Array(1.25, 0, 9.84375, 8.67187, 9.84375, 9.84375, 0.078125, 9.92187, 0, 0)
+polygon = PackedVector2Array(1.56252, 0.390623, 9.84375, 8.67187, 9.84375, 9.84375, 0.078125, 9.92187, 0, 0)
 
 [node name="Sprite2D" type="Sprite2D" parent="L7/Bottom/OneBottomHole4/Triangle2"]
 texture = ExtResource("5_lquwl")
@@ -2849,21 +2746,6 @@ position = Vector2(640.7, 491)
 shape = SubResource("RectangleShape2D_h2yge")
 debug_color = Color(0.800683, 0.194762, 0.905107, 0.42)
 
-[node name="Border" type="Area2D" parent="L7"]
-position = Vector2(453, 792)
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="L7/Border"]
-position = Vector2(195.5, 183)
-shape = SubResource("RectangleShape2D_lquwl")
-
-[node name="CollisionShape2D2" type="CollisionShape2D" parent="L7/Border"]
-position = Vector2(-633, -291.75)
-shape = SubResource("RectangleShape2D_7mycd")
-
-[node name="CollisionShape2D3" type="CollisionShape2D" parent="L7/Border"]
-position = Vector2(1024, -290)
-shape = SubResource("RectangleShape2D_7mycd")
-
 [node name="Bubbles" type="Node2D" parent="L7"]
 
 [node name="Bubble" parent="L7/Bubbles" instance=ExtResource("2_0xm2m")]
@@ -2893,6 +2775,7 @@ text = "Click to pop the"
 label_settings = SubResource("LabelSettings_272bh")
 
 [node name="L8" type="Area2D" parent="." node_paths=PackedStringArray("bubbles", "holes")]
+visible = false
 gravity_space_override = 3
 script = ExtResource("2_272bh")
 bubbles = [NodePath("Bubbles/BubbleB1"), NodePath("Bubbles/BubbleU"), NodePath("Bubbles/BubbleB2"), NodePath("Bubbles/BubbleB3"), NodePath("Bubbles/BubbleL"), NodePath("Bubbles/BubbleE")]
@@ -2933,21 +2816,6 @@ position = Vector2(640.7, 491)
 shape = SubResource("RectangleShape2D_h2yge")
 debug_color = Color(0.800683, 0.194762, 0.905107, 0.42)
 
-[node name="Border" type="Area2D" parent="L8"]
-position = Vector2(453, 792)
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="L8/Border"]
-position = Vector2(195.5, 183)
-shape = SubResource("RectangleShape2D_lquwl")
-
-[node name="CollisionShape2D2" type="CollisionShape2D" parent="L8/Border"]
-position = Vector2(-633, -291.75)
-shape = SubResource("RectangleShape2D_7mycd")
-
-[node name="CollisionShape2D3" type="CollisionShape2D" parent="L8/Border"]
-position = Vector2(1024, -290)
-shape = SubResource("RectangleShape2D_7mycd")
-
 [node name="Bubbles" type="Node2D" parent="L8"]
 
 [node name="BubbleB1" parent="L8/Bubbles" instance=ExtResource("2_0xm2m")]
@@ -2977,6 +2845,7 @@ text = "Click to pop the"
 label_settings = SubResource("LabelSettings_272bh")
 
 [node name="L9" type="Area2D" parent="." node_paths=PackedStringArray("bubbles", "holes")]
+visible = false
 gravity_space_override = 3
 script = ExtResource("2_272bh")
 bubbles = [NodePath("Bubbles/BubbleB1"), NodePath("Bubbles/BubbleU"), NodePath("Bubbles/BubbleB2"), NodePath("Bubbles/BubbleB3"), NodePath("Bubbles/BubbleL"), NodePath("Bubbles/BubbleE")]
@@ -3017,21 +2886,6 @@ position = Vector2(640.7, 491)
 shape = SubResource("RectangleShape2D_h2yge")
 debug_color = Color(0.800683, 0.194762, 0.905107, 0.42)
 
-[node name="Border" type="Area2D" parent="L9"]
-position = Vector2(453, 792)
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="L9/Border"]
-position = Vector2(195.5, 183)
-shape = SubResource("RectangleShape2D_lquwl")
-
-[node name="CollisionShape2D2" type="CollisionShape2D" parent="L9/Border"]
-position = Vector2(-633, -291.75)
-shape = SubResource("RectangleShape2D_7mycd")
-
-[node name="CollisionShape2D3" type="CollisionShape2D" parent="L9/Border"]
-position = Vector2(1024, -290)
-shape = SubResource("RectangleShape2D_7mycd")
-
 [node name="Bubbles" type="Node2D" parent="L9"]
 
 [node name="BubbleB1" parent="L9/Bubbles" instance=ExtResource("2_0xm2m")]
@@ -3059,6 +2913,53 @@ offset_right = 588.0
 offset_bottom = -31.0
 text = "Click to pop the"
 label_settings = SubResource("LabelSettings_272bh")
+
+[node name="L10" type="Area2D" parent="."]
+gravity_space_override = 3
+script = ExtResource("2_272bh")
+levelData = ExtResource("20_d13ii")
+
+[node name="TextureRect" type="TextureRect" parent="L10"]
+offset_left = -2.0
+offset_top = -346.0
+offset_right = 1281.0
+offset_bottom = 947.0
+texture = ExtResource("2_7mycd")
+stretch_mode = 1
+
+[node name="Bottom" type="Node2D" parent="L10"]
+position = Vector2(0, 500)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="L10"]
+position = Vector2(640.7, 491)
+shape = SubResource("RectangleShape2D_h2yge")
+debug_color = Color(0.800683, 0.194762, 0.905107, 0.42)
+
+[node name="Bubbles" type="Node2D" parent="L10"]
+
+[node name="Label" type="Label" parent="L10"]
+offset_left = 47.0
+offset_top = -85.0
+offset_right = 588.0
+offset_bottom = -31.0
+text = "Click to pop the"
+label_settings = SubResource("LabelSettings_272bh")
+
+[node name="Border" type="Node2D" parent="."]
+
+[node name="Area2D" type="Area2D" parent="Border"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Border/Area2D"]
+position = Vector2(-136, 498.5)
+shape = SubResource("RectangleShape2D_ryguw")
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="Border/Area2D"]
+position = Vector2(1384, 500)
+shape = SubResource("RectangleShape2D_ryguw")
+
+[node name="CollisionShape2D3" type="CollisionShape2D" parent="Border/Area2D"]
+position = Vector2(600.5, 936)
+shape = SubResource("RectangleShape2D_d13ii")
 
 [node name="TopRightUI" type="Node2D" parent="."]
 
@@ -3197,6 +3098,7 @@ autowrap_mode = 2
 [connection signal="body_exited" from="L7/Bottom/OneBottomHole5/Area2D" to="L7/Bottom/OneBottomHole5" method="_on_area_2d_body_exited"]
 [connection signal="body_entered" from="L7/Bottom/OneBottomHole6/Area2D" to="L7/Bottom/OneBottomHole6" method="_on_area_2d_body_entered"]
 [connection signal="body_exited" from="L7/Bottom/OneBottomHole6/Area2D" to="L7/Bottom/OneBottomHole6" method="_on_area_2d_body_exited"]
+[connection signal="body_entered" from="Border/Area2D" to="." method="_on_ball_entered_border"]
 [connection signal="s_bubble_clicked" from="TopRightUI/ResetButton" to="." method="on_bubble_clicked"]
 [connection signal="s_bubble_clicked" from="TopRightUI/ListButton" to="." method="on_bubble_clicked"]
 [connection signal="s_bubble_clicked" from="TopRightUI/NextButton" to="." method="on_bubble_clicked"]

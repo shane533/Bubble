@@ -22,11 +22,16 @@ const WIN_COUNT = 6
 var _balls: Array = []
 var _levelBubbles: Array = []
 
+var _letterBubbles: Array = []
+var _typingStr: String = ""
+
 var _is_showing_levels: bool = false
 #var _current_level_index: int = 0
 var _is_first_click: bool = false
 var _click_limit: int = 99
 var _empty_bubble:Bubble
+
+var _words:Array
 
 func _ready() -> void:
 	print("Main Init")
@@ -67,36 +72,70 @@ func init_level(level_index):
 	update_click_limit()
 	
 	var code = "BUBBLE"
-	for i in range(len(code)):
-		var b = level.bubbles[i]
-		var is_moving:bool = Global.current_level in [1,2]
-		b.init(code[i])
-		match Global.current_level:
-			
-			1:
-				b.start_move(randi()%2==1, 100+randi()%50, b.position.x - 100, b.position.x+100)
-			2:
-				b.start_move(false, 170, 50 + 500 * (i/3), 500+ 500*(i/3))
-			3:
-				b.start_move(false, 150, 50 + 500 * (i/3), 500+ 500*(i/3))
-			4:
-				b.start_move(false, 150+randi()%50, 100, 1100)
-			6:
-				b.start_move(i%2==1, 150, 100, 1100)
-			9:
-				if i==1:
-					b.start_move(true, 150, 100, 1100)
-				#b.start_grow(5)
-		if len(level.levelData.bubble_grow_time) > i:
-			b.start_grow(level.levelData.bubble_grow_time[i])
-		b.s_bubble_clicked.connect(on_bubble_clicked)
-		var h = level.holes[i]
-		h.init(code[i])
-		h.s_ball_in_hole.connect(on_ball_in_hole)
+	if len(level.bubbles) == len(code) and len(level.holes) == len(code):
+		for i in range(len(code)):
+			var b = level.bubbles[i]
+			var is_moving:bool = Global.current_level in [1,2]
+			b.init(code[i])
+			match Global.current_level:
+				1:
+					b.start_move(randi()%2==1, 100+randi()%50, b.position.x - 100, b.position.x+100)
+				2:
+					b.start_move(false, 170, 50 + 500 * (i/3), 500+ 500*(i/3))
+				3:
+					b.start_move(false, 150, 50 + 500 * (i/3), 500+ 500*(i/3))
+				4:
+					b.start_move(false, 150+randi()%50, 100, 1100)
+				6:
+					b.start_move(i%2==1, 150, 100, 1100)
+				9:
+					if i==1:
+						b.start_move(true, 150, 100, 1100)
+					#b.start_grow(5)
+			if len(level.levelData.bubble_grow_time) > i:
+				b.start_grow(level.levelData.bubble_grow_time[i])
+			b.s_bubble_clicked.connect(on_bubble_clicked)
+			var h = level.holes[i]
+			h.init(code[i])
+			h.s_ball_in_hole.connect(on_ball_in_hole)
 	
 	if Global.current_level in [7,8,9]: # have empty bubble
 		spawn_empty_bubble()
+		
+	if Global.current_level == 10: # a speical level
+		start_spawn_floating_letters()
+		var file = FileAccess.open("res://words.txt", FileAccess.READ)
+		var content = file.get_as_text()
+		_words = content.split('\n')
+		limitLabel.visible = true
+		_click_limit = 0
+		update_typing_score()
+		#print(_words)
 
+func start_spawn_floating_letters():
+	print("TODO")
+	var tween = create_tween()
+	tween.tween_interval(3)
+	tween.tween_callback(spawn_floating_letters)
+	tween.set_loops(0)
+
+func spawn_floating_letters():
+	var rng = RandomNumberGenerator.new()
+	var letter_frequency = [820, 150,280,430,1270,220,200,610,700,15,77,400,240,670,750,190,9.5,600,910,280,98,240,15,200,7.4]
+	var letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+	for i in range(4): # 4 rows
+		var b = bubble_ts.instantiate(PackedScene.GEN_EDIT_STATE_DISABLED)
+		var r = rng.rand_weighted(letter_frequency)
+		var ch = letters[r]
+		var x = randi() % 50
+		if i%2 == 0:
+			x = 1200 + randi() % 50
+		b.init(ch)
+		b.position = Vector2(x, 100+100*i)
+		b.start_move(i%2 == 0, 150+randi()%50, -150, 1300)
+		levels[Global.current_level].add_child(b)
+		_letterBubbles.append(b)
+		
 func spawn_empty_bubble():
 	_empty_bubble = bubble_ts.instantiate(PackedScene.GEN_EDIT_STATE_DISABLED)
 	_empty_bubble.init("EMPTY")
@@ -173,6 +212,18 @@ func red_blink_limit_label():
 	tween.tween_property(limitLabel, "self_modulate", Color.RED, 0.1)
 	tween.tween_interval(0.5)
 	tween.tween_property(limitLabel, "self_modulate", Color.WHITE, 0.1)
+	
+func green_blink_limit_label():
+	var tween = create_tween()
+	tween.tween_property(limitLabel, "self_modulate", Color.GREEN, 0.1)
+	tween.tween_interval(0.5)
+	tween.tween_property(limitLabel, "self_modulate", Color.WHITE, 0.1)
+
+func red_blink_retry_button():
+	var tween = create_tween()
+	tween.tween_property($TopRightUI/ResetButton/OuterNode/Outer, "self_modulate", Color.RED, 0.1)
+	tween.tween_interval(0.5)
+	tween.tween_property($TopRightUI/ResetButton/OuterNode/Outer, "self_modulate", Color.WHITE, 0.1)
 
 func update_click_limit():
 	limitLabel.text = "Pop Limit: %d" % _click_limit
@@ -185,7 +236,7 @@ func reset_level():
 	get_tree().reload_current_scene()
 	
 func next_level():
-	if Global.current_level < len(levels)-1:
+	if Global.current_level < len(levels)-2:
 		Global.current_level += 1
 		reset_level()
 	else:
@@ -212,10 +263,10 @@ func hide_level():
 
 func on_fin_bubble_clicked(bubble, is_active):
 	bubble.explode()
-	$FinNode/Label.text = "Thank you for playing!"
+	$FinNode/Label.text = "Thank you for playing!\n And One More Thing!"
 	print("FIN")
 	await get_tree().create_timer(5).timeout
-	Global.current_level = 0
+	Global.current_level = 10
 	reset_level()
 
 func pop_the_bubble(bubble: Bubble) -> void:
@@ -246,3 +297,51 @@ func win():
 	create_tween().tween_property(nextBubble, "scale", Vector2(1.5,1.5), 0.5)
 	nextBubble.visible = true
 	
+
+func _input(event: InputEvent) -> void:
+	if Global.current_level == 10: ## Typing!
+		if event is InputEventKey and event.is_pressed():
+			var key = (event as InputEventKey).keycode
+			if key == KEY_ENTER:
+				flush_typing()
+			elif key >= KEY_A and key <= KEY_Z:
+				type_key(key)
+				
+func flush_typing():
+	print("Flush typing")
+	if _typingStr.to_lower() in _words:
+		_click_limit += 100 * len(_typingStr)
+		green_blink_limit_label()
+	else:
+		_click_limit -= 100
+		red_blink_limit_label()
+	update_typing_score()
+		
+	_typingStr = ""
+	update_typing_str()
+
+func update_typing_score():
+	limitLabel.text = "TyingScore: %d" % _click_limit
+
+func type_key(key):
+	var str = OS.get_keycode_string(key)
+	print("Type key %s" % str)
+	for b in _letterBubbles:
+		if b != null:
+			if b.get_char() == str:
+				pop_the_bubble(b)
+				_typingStr = _typingStr + str
+				update_typing_str()
+				return
+				
+func update_typing_str():
+	hintLabel.visible = true
+	hintLabel.text = _typingStr
+
+func _on_ball_entered_border(body: Node2D) -> void:
+	if body is Inner:
+		body.queue_free()
+		print("Ball Enter Border")
+		if Global.current_level != 10:
+			red_blink_retry_button()
+	pass # Replace with function body.

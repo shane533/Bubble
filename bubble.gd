@@ -5,6 +5,7 @@ class_name Bubble
 @export var outer: Sprite2D
 @export var target_char: String
 @export var explosion: AnimatedSprite2D
+@export var sound: AudioStreamPlayer
 
 signal s_bubble_clicked(bubble, is_active)
 signal s_enter_empty_bubble(bubble, ball)
@@ -82,6 +83,7 @@ func explode():
 	$InnerNode.visible = false
 	$OuterNode/Area2D/CollisionShape2D.set_deferred("disabled", true)
 	explosion.play()
+	sound.play()
 
 func tween_floating():
 	await get_tree().create_timer(randf()).timeout
@@ -95,6 +97,8 @@ func tween_floating():
 	
 func _process(delta: float) -> void:
 	if _is_moving:
+		if Global.current_level== 10 and (self.position.x < 0 or self.position.x > 1250):
+			self.queue_free()
 		var delta_offset = delta * _speed
 		if _is_towards_left:
 			self.position.x = self.position.x - delta_offset
