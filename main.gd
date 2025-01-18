@@ -53,8 +53,8 @@ func init_level(level_index):
 	levelLabel.visible = level_index != 0
 	levelLabel.text = "Level %d" % level_index
 	
-	limitLabel.visible = level_index > 2
 	_click_limit = level.levelData.pop_limit
+	limitLabel.visible = _click_limit < 99
 	update_click_limit()
 	
 	var code = "BUBBLE"
@@ -82,7 +82,7 @@ func init_level(level_index):
 		h.init(code[i])
 		h.s_ball_in_hole.connect(on_ball_in_hole)
 	
-	if Global.current_level == 7: # have empty bubble
+	if Global.current_level in [7,8]: # have empty bubble
 		spawn_empty_bubble()
 
 func spawn_empty_bubble():
@@ -97,7 +97,7 @@ func spawn_empty_bubble():
 			c += 1
 		else:
 			c -= 1
-	_empty_bubble.start_move(c<=0, 150, 100, 1100)
+	_empty_bubble.start_move(c<0, 150, 100, 1200)
 	_empty_bubble.s_bubble_clicked.connect(on_bubble_clicked)
 	_empty_bubble.s_enter_empty_bubble.connect(on_enter_empty_bubble)
 	levels[Global.current_level].add_child(_empty_bubble)

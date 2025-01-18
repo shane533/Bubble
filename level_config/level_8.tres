@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="LevelData" load_steps=2 format=3 uid="uid://dwpcfc1wicgdb"]
+
+[ext_resource type="Script" uid="uid://cqwmilv5c3bei" path="res://level_data.gd" id="1_yjc6s"]
+
+[resource]
+script = ExtResource("1_yjc6s")
+level_id = 8
+pop_limit = 999
+bubble_grow_time = Array[float]([38.0, 16.0, 24.0, 56.0, 3.0, 46.0])
+metadata/_custom_type_script = ExtResource("1_yjc6s")
